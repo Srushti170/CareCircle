@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 
 import { AppShell } from "@/components/app-shell";
 import { useCare } from "@/components/care-provider";
+import { EmptyState } from "@/components/empty-state";
 import { Icon } from "@/components/icon";
 import { useLanguage } from "@/components/language-provider";
 import { Button, Card, Field, Input, PageHeader, Select } from "@/components/ui";
@@ -108,28 +109,36 @@ export default function DocumentsPage() {
           </div>
           <Button onClick={() => setCategoryFilter("All")} variant="ghost">{t.common.showAll}</Button>
         </div>
-        <div className="grid gap-5 md:grid-cols-2">
-          {documents.map((item) => (
-            <Card className="flex items-center gap-4 p-5" key={item.id}>
-              <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-[18px] ${item.type === "pdf" ? "bg-danger-bg text-danger" : item.type === "doc" ? "bg-accent text-primary" : "bg-accent2 text-[#2e607a]"}`}>
-                <Icon name={item.type === "pdf" ? "picture_as_pdf" : item.type === "doc" ? "description" : "image"} />
-              </div>
-              <div className="min-w-0 flex-1">
-                <div className="truncate text-label font-semibold">{item.name}</div>
-                <div className="mt-1 text-sm text-text-muted">{t.seed.documents[item.id as keyof typeof t.seed.documents]?.date ?? item.date}</div>
-                <div className="mt-1 text-sm text-text-muted">{categoryLabels[item.category]} • {t.seed.documents[item.id as keyof typeof t.seed.documents]?.summary ?? item.summary}</div>
-              </div>
-              <div className="flex gap-2">
-                <button className="rounded-full bg-surface-muted p-3 text-primary" type="button">
-                  <Icon name="visibility" />
-                </button>
-                <button className="rounded-full bg-surface-muted p-3 text-primary" type="button">
-                  <Icon name="download" />
-                </button>
-              </div>
-            </Card>
-          ))}
-        </div>
+        {documents.length === 0 ? (
+          <EmptyState
+            icon="description"
+            title={t.documents.title}
+            description="No documents found in this folder. Add one above to build your secure family vault."
+          />
+        ) : (
+          <div className="grid gap-5 md:grid-cols-2">
+            {documents.map((item) => (
+              <Card className="flex items-center gap-4 p-5" key={item.id}>
+                <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-[18px] ${item.type === "pdf" ? "bg-danger-bg text-danger" : item.type === "doc" ? "bg-accent text-primary" : "bg-accent2 text-[#2e607a]"}`}>
+                  <Icon name={item.type === "pdf" ? "picture_as_pdf" : item.type === "doc" ? "description" : "image"} />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-label font-semibold">{item.name}</div>
+                  <div className="mt-1 text-sm text-text-muted">{t.seed.documents[item.id as keyof typeof t.seed.documents]?.date ?? item.date}</div>
+                  <div className="mt-1 text-sm text-text-muted">{categoryLabels[item.category]} • {t.seed.documents[item.id as keyof typeof t.seed.documents]?.summary ?? item.summary}</div>
+                </div>
+                <div className="flex gap-2">
+                  <button className="rounded-full bg-surface-muted p-3 text-primary" type="button">
+                    <Icon name="visibility" />
+                  </button>
+                  <button className="rounded-full bg-surface-muted p-3 text-primary" type="button">
+                    <Icon name="download" />
+                  </button>
+                </div>
+              </Card>
+            ))}
+          </div>
+        )}
       </section>
     </AppShell>
   );

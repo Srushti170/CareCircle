@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { AppShell } from "@/components/app-shell";
 import { useCare } from "@/components/care-provider";
+import { EmptyState } from "@/components/empty-state";
 import { useLanguage } from "@/components/language-provider";
 import { Button, Card, Field, Input, PageHeader, Textarea } from "@/components/ui";
 
@@ -112,17 +113,25 @@ export default function HealthLogPage() {
           <Card className="p-6">
             <h3 className="text-h2 font-semibold text-primary">{t.health.recentCheckins}</h3>
             <div className="mt-5 space-y-4">
-              {recentLogs.map((item) => (
-                <div className="rounded-[20px] bg-surface-muted px-4 py-4" key={item.id}>
-                  <div className="flex items-center justify-between">
-                    <span className="text-label font-medium">{item.date}</span>
-                    <span className="text-label text-text-muted">{t.values.moods[item.mood as keyof typeof t.values.moods] ?? item.mood}</span>
+              {recentLogs.length === 0 ? (
+                <EmptyState
+                  icon="monitor_heart"
+                  title={t.health.recentCheckins}
+                  description="No daily logs checked in yet. Log vitals and mood to start tracking health trends."
+                />
+              ) : (
+                recentLogs.map((item) => (
+                  <div className="rounded-[20px] bg-surface-muted px-4 py-4" key={item.id}>
+                    <div className="flex items-center justify-between">
+                      <span className="text-label font-medium">{item.date}</span>
+                      <span className="text-label text-text-muted">{t.values.moods[item.mood as keyof typeof t.values.moods] ?? item.mood}</span>
+                    </div>
+                    <div className="mt-2 text-sm text-text-muted">
+                      {t.health.pain} {item.painLevel} • {t.health.sleepShort} {item.sleepHours}h • BP {item.bloodPressure} • {t.health.sugar} {item.sugarLevel}
+                    </div>
                   </div>
-                  <div className="mt-2 text-sm text-text-muted">
-                    {t.health.pain} {item.painLevel} • {t.health.sleepShort} {item.sleepHours}h • BP {item.bloodPressure} • {t.health.sugar} {item.sugarLevel}
-                  </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </Card>
         </div>

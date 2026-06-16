@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-
+import { BrandLogo } from "@/components/brand-logo";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { Card } from "@/components/ui";
 import { cn } from "@/lib/utils";
@@ -22,9 +21,7 @@ export function AuthShell({
   return (
     <main className="min-h-screen px-4 py-6 md:px-6 md:py-8">
       <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-4">
-        <Link className="text-[1.8rem] font-semibold tracking-[-0.03em] text-primary" href="/">
-          CareCircle
-        </Link>
+        <BrandLogo imageClassName="h-12 w-12" priority />
         <LanguageSwitcher />
       </div>
 

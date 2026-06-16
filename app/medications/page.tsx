@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 
 import { AppShell } from "@/components/app-shell";
 import { useCare } from "@/components/care-provider";
+import { EmptyState } from "@/components/empty-state";
 import { Icon } from "@/components/icon";
 import { useLanguage } from "@/components/language-provider";
 import { Button, Card, Field, Input, PageHeader, Select, StatusPill } from "@/components/ui";
@@ -187,7 +188,13 @@ export default function MedicationsPage() {
                   />
                 );
               })}
-              {group.items.length === 0 ? <Card className="p-5 text-body text-text-muted">{t.medications.noMedicines}</Card> : null}
+              {group.items.length === 0 ? (
+                <EmptyState
+                  icon={group.icon}
+                  title={group.title}
+                  description={t.medications.noMedicines}
+                />
+              ) : null}
             </div>
           </section>
         ))}

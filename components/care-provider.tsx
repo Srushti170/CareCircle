@@ -85,20 +85,48 @@ export function CareProvider({ children }: { children: React.ReactNode }) {
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    try {
-      const saved = window.localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        setState(JSON.parse(saved) as CareCircleState);
+    async function loadState() {
+      try {
+        const response = await fetch("/api/state");
+        if (response.ok) {
+          const serverData = await response.json();
+          if (serverData && serverData.auth) {
+            setState(serverData);
+            setHydrated(true);
+            return;
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load state from server database:", err);
       }
-    } catch {}
-    setHydrated(true);
+
+      try {
+        const saved = window.localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          setState(JSON.parse(saved) as CareCircleState);
+        }
+      } catch {}
+      setHydrated(true);
+    }
+
+    loadState();
   }, []);
 
   useEffect(() => {
     if (!hydrated) {
       return;
     }
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch {}
+
+    fetch("/api/state", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(state)
+    }).catch((err) => console.error("Failed to sync state to server:", err));
   }, [hydrated, state]);
 
   const value = useMemo<CareContextValue>(() => {

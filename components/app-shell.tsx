@@ -85,7 +85,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           showEmergency={showEmergency}
         />
 
-        <div className="min-w-0 flex-1">
+        <div className="min-w-0 flex-1 pb-24 lg:pb-0">
           {children}
           <AppFooter />
         </div>

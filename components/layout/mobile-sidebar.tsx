@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 
+import { BrandLogo } from "@/components/brand-logo";
 import { Icon } from "@/components/icon";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { useLanguage } from "@/components/language-provider";
@@ -38,7 +39,7 @@ export function MobileSidebar({
         onClick={(event) => event.stopPropagation()}
       >
         <div className="mb-4 flex items-center justify-between">
-          <div className="text-h3 font-bold text-primary">{t.common.appName}</div>
+          <BrandLogo imageClassName="h-11 w-11" textClassName="text-[1.45rem]" />
           <button
             aria-label="Close navigation"
             className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white shadow-card"

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 
+import { BrandLogo } from "@/components/brand-logo";
 import { Icon } from "@/components/icon";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { useLanguage } from "@/components/language-provider";
@@ -55,7 +56,7 @@ export default function LandingPage() {
     <main className="min-h-screen">
       <header className="sticky top-0 z-40 border-b border-transparent bg-[#fff8f1]/85 backdrop-blur-xl">
         <div className="mx-auto flex max-w-[1320px] items-center justify-between gap-4 px-4 py-4 md:px-6">
-          <div className="text-h2 font-semibold tracking-[-0.03em] text-primary">{t.common.appName}</div>
+          <BrandLogo imageClassName="h-12 w-12" priority />
           <nav className="hidden items-center gap-8 text-label font-medium md:flex">
             <a className="border-b border-primary pb-1" href="#home">{t.landing.home}</a>
             <a href="#features">{t.landing.features}</a>
@@ -168,7 +169,7 @@ export default function LandingPage() {
       <footer className="border-t border-line/70 bg-[#ece5dc] px-4 py-10 md:px-6">
         <div className="mx-auto flex max-w-[1320px] flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <div className="text-h2 font-semibold text-primary">{t.common.appName}</div>
+            <BrandLogo imageClassName="h-12 w-12" textClassName="text-h2 font-semibold" />
             <p className="mt-2 text-text-muted">{t.common.footerLine}</p>
           </div>
           <div className="flex flex-wrap gap-5 text-sm font-medium text-text-muted">

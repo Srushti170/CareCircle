@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 
+import { BrandLogo } from "@/components/brand-logo";
 import { Icon } from "@/components/icon";
 import { useLanguage } from "@/components/language-provider";
 import { navItems } from "@/lib/app-state";
@@ -33,7 +34,7 @@ export function DesktopSidebar({
       )}
     >
       <div className={cn("mb-4 flex items-center", open ? "justify-between px-1" : "justify-center")}>
-        {open ? <div className="text-sm font-semibold tracking-[0.01em] text-text-muted">{t.common.appName}</div> : null}
+        {open ? <BrandLogo imageClassName="h-10 w-10" textClassName="text-[1.15rem]" /> : <BrandLogo imageClassName="h-10 w-10" showText={false} />}
         <button
           aria-label={open ? "Collapse sidebar" : "Expand sidebar"}
           className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white shadow-card transition hover:bg-surface-muted"

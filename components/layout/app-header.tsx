@@ -2,10 +2,13 @@
 
 import Link from "next/link";
 
+import { BrandLogo } from "@/components/brand-logo";
+import { useCare } from "@/components/care-provider";
 import { Icon } from "@/components/icon";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { useLanguage } from "@/components/language-provider";
 import { Input } from "@/components/ui";
+import { getAuthCopy } from "@/lib/auth-copy";
 
 type QuickResult = {
   href: string;
@@ -27,15 +30,15 @@ export function AppHeader({
   onQueryClear,
   onMobileMenuOpen
 }: AppHeaderProps) {
-  const { t } = useLanguage();
+  const { locale, t } = useLanguage();
+  const { logout } = useCare();
+  const authCopyText = getAuthCopy(locale);
 
   return (
     <header className="sticky top-0 z-40 border-b border-line/70 bg-[#fff8f1]/90 backdrop-blur-xl">
       <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-4 py-4 md:px-6">
         <div className="flex items-center gap-3">
-          <Link className="text-h2 font-bold tracking-[-0.02em] text-primary" href="/">
-            {t.common.appName}
-          </Link>
+          <BrandLogo imageClassName="h-12 w-12" priority />
         </div>
 
         <div className="relative hidden min-w-[320px] flex-1 lg:block lg:max-w-[460px]">
@@ -64,6 +67,14 @@ export function AppHeader({
             <Icon className="text-primary" name="account_circle" />
             <span>{t.common.primaryCaregiver}</span>
           </div>
+          <button
+            className="hidden items-center gap-2 rounded-full border border-line bg-white/90 px-4 py-2.5 text-sm font-semibold text-danger shadow-card transition hover:bg-danger-bg md:inline-flex"
+            onClick={logout}
+            type="button"
+          >
+            <Icon name="logout" />
+            <span>{authCopyText.signOut}</span>
+          </button>
           <button
             aria-label="Open navigation"
             className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white shadow-card lg:hidden"
