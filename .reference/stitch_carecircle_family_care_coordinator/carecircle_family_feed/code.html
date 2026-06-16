@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Family Feed - CareCircle</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-tint": "#466556",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-container": "#656460",
+                    "on-primary": "#ffffff",
+                    "surface-dim": "#dfd9d2",
+                    "on-tertiary-fixed": "#001f29",
+                    "primary-fixed-dim": "#adcebc",
+                    "on-error-container": "#93000a",
+                    "secondary": "#5f5e5a",
+                    "surface-container-highest": "#e8e2db",
+                    "surface-container-high": "#ede7e0",
+                    "inverse-surface": "#33302b",
+                    "surface": "#fff8f1",
+                    "on-tertiary-container": "#a8d2e5",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed-variant": "#474743",
+                    "tertiary": "#174454",
+                    "on-surface-variant": "#424844",
+                    "on-tertiary-fixed-variant": "#214c5c",
+                    "on-primary-fixed-variant": "#2f4d3f",
+                    "surface-container-low": "#f9f3eb",
+                    "background": "#fff8f1",
+                    "secondary-fixed": "#e5e2dc",
+                    "primary-fixed": "#c8ead8",
+                    "on-secondary": "#ffffff",
+                    "primary-container": "#3e5c4e",
+                    "surface-container-lowest": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "inverse-on-surface": "#f6f0e9",
+                    "on-surface": "#1d1b17",
+                    "tertiary-fixed-dim": "#a3cde1",
+                    "on-secondary-fixed": "#1c1c18",
+                    "surface-container": "#f3ede6",
+                    "surface-variant": "#e8e2db",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed": "#022015",
+                    "secondary-container": "#e5e2dc",
+                    "surface-bright": "#fff8f1",
+                    "primary": "#274437",
+                    "outline-variant": "#c1c8c3",
+                    "tertiary-container": "#325b6c",
+                    "tertiary-fixed": "#bfe9fd",
+                    "outline": "#727974",
+                    "on-background": "#1d1b17",
+                    "inverse-primary": "#adcebc",
+                    "on-primary-container": "#b2d3c1",
+                    "secondary-fixed-dim": "#c9c6c1"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "md": "20px",
+                    "sm": "12px",
+                    "lg": "32px",
+                    "container-max": "1200px",
+                    "xs": "4px",
+                    "xl": "48px",
+                    "base": "8px",
+                    "touch-target": "56px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "display": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "label-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "label-sm": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["20px", {"lineHeight": "30px", "fontWeight": "400"}],
+                    "display": ["40px", {"lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "label-lg": ["18px", {"lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "body-md": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "label-sm": ["16px", {"lineHeight": "20px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            left: 27px;
+            top: 40px;
+            bottom: 0;
+            width: 2px;
+            background: repeating-linear-gradient(to bottom, transparent, transparent 5px, #c1c8c3 5px, #c1c8c3 10px);
+            opacity: 0.5;
+        }
+        .card-shadow {
+            box-shadow: 0 4px 20px -2px rgba(70, 101, 86, 0.08);
+        }
+        .touch-btn {
+            min-height: 56px;
+            min-width: 56px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md">
+<!-- Top Navigation -->
+<header class="w-full top-0 sticky z-50 bg-surface shadow-sm shadow-surface-tint/10">
+<div class="flex justify-between items-center h-touch-target px-md max-w-container-max mx-auto">
+<div class="text-headline-md font-headline-md font-bold text-primary">CareCircle</div>
+<nav class="hidden md:flex gap-lg">
+<a class="text-on-surface-variant hover:bg-surface-container-low transition-colors px-sm py-xs rounded-lg font-label-lg text-label-lg" href="#">Dashboard</a>
+<a class="text-primary border-b-2 border-primary font-label-lg text-label-lg" href="#">Family Feed</a>
+<a class="text-on-surface-variant hover:bg-surface-container-low transition-colors px-sm py-xs rounded-lg font-label-lg text-label-lg" href="#">Medications</a>
+</nav>
+<div class="flex items-center gap-sm">
+<button class="material-symbols-outlined text-primary p-2 hover:bg-surface-container-low rounded-full">language</button>
+<button class="material-symbols-outlined text-primary p-2 hover:bg-surface-container-low rounded-full">account_circle</button>
+</div>
+</div>
+</header>
+<div class="flex max-w-container-max mx-auto">
+<!-- Sidebar - Hidden on mobile -->
+<aside class="hidden lg:flex flex-col w-64 h-[calc(100vh-56px)] sticky top-[56px] py-md bg-surface-container-low shadow-md shadow-surface-tint/5">
+<div class="px-md mb-lg">
+<h2 class="font-headline-md text-headline-md text-primary">Family Portal</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant">The Digital Hearth</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg mx-2 my-1 px-md py-sm transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-lg text-label-lg">Dashboard</span>
+</a>
+<a class="flex items-center gap-sm bg-primary-container text-on-primary-container rounded-lg mx-2 my-1 px-md py-sm transition-all" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-label-lg text-label-lg">Family Feed</span>
+</a>
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg mx-2 my-1 px-md py-sm transition-all" href="#">
+<span class="material-symbols-outlined">medical_services</span>
+<span class="font-label-lg text-label-lg">Medications</span>
+</a>
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg mx-2 my-1 px-md py-sm transition-all" href="#">
+<span class="material-symbols-outlined">checklist</span>
+<span class="font-label-lg text-label-lg">Tasks</span>
+</a>
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg mx-2 my-1 px-md py-sm transition-all" href="#">
+<span class="material-symbols-outlined">event</span>
+<span class="font-label-lg text-label-lg">Appointments</span>
+</a>
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg mx-2 my-1 px-md py-sm transition-all" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-lg text-label-lg">Documents</span>
+</a>
+</nav>
+<div class="px-md mt-auto pt-md space-y-4">
+<button class="w-full py-sm px-md bg-error text-on-error rounded-xl font-label-lg flex items-center justify-center gap-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined">emergency</span>
+                    Emergency Help
+                </button>
+<div class="border-t border-outline-variant pt-md">
+<a class="flex items-center gap-sm text-on-surface-variant py-2 px-md hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-sm text-label-sm">Settings</span>
+</a>
+<a class="flex items-center gap-sm text-on-surface-variant py-2 px-md hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-sm text-label-sm">Support</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 p-md md:p-xl bg-surface-container-lowest min-h-screen">
+<!-- Header Section -->
+<div class="mb-lg flex flex-col md:flex-row md:items-end justify-between gap-md">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-primary mb-xs">Family Activity Feed</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xl">Stay connected with Dad's daily journey. Every update is a shared moment of care.</p>
+</div>
+<button class="flex items-center gap-sm bg-primary text-on-primary px-lg py-sm rounded-full font-label-lg card-shadow hover:brightness-110 transition-all touch-btn">
+<span class="material-symbols-outlined">add</span>
+                    Share an Update
+                </button>
+</div>
+<!-- Feed Timeline -->
+<div class="relative space-y-lg timeline-line">
+<!-- Timeline Section: Today -->
+<div class="space-y-md">
+<div class="flex items-center gap-md">
+<div class="w-14 text-right">
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container-high px-2 py-1 rounded">Today</span>
+</div>
+<div class="w-4 h-4 rounded-full bg-primary ring-4 ring-primary-fixed"></div>
+<div class="h-px flex-1 bg-outline-variant/30"></div>
+</div>
+<!-- Item 1: Medication -->
+<div class="flex gap-md group">
+<div class="w-14 text-right pt-4">
+<span class="font-label-sm text-label-sm text-on-surface-variant">10:00 AM</span>
+</div>
+<div class="z-10 mt-5 w-4 h-4 rounded-full bg-surface-container-high border-2 border-primary group-hover:scale-125 transition-transform"></div>
+<div class="flex-1 bg-white p-md rounded-[1.5rem] border border-surface-variant card-shadow flex flex-col md:flex-row gap-md items-start">
+<div class="bg-primary-fixed p-3 rounded-2xl text-primary">
+<span class="material-symbols-outlined">medical_services</span>
+</div>
+<div class="flex-1">
+<p class="font-label-lg text-label-lg text-on-surface">
+<span class="font-bold">Rahul</span> marked <span class="text-primary">'Evening Medicine'</span> as taken.
+                                </p>
+<div class="mt-xs flex items-center gap-xs">
+<span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[12px] font-bold">DONE</span>
+</div>
+<div class="mt-md flex gap-sm">
+<button class="flex items-center gap-xs text-on-surface-variant hover:text-primary transition-colors py-2 px-4 rounded-full bg-surface-container-low font-label-sm">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+                                        2
+                                    </button>
+<button class="flex items-center gap-xs text-on-surface-variant hover:text-primary transition-colors py-2 px-4 rounded-full bg-surface-container-low font-label-sm">
+<span class="material-symbols-outlined text-[18px]">chat_bubble</span>
+                                        Add Comment
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 2: Mood -->
+<div class="flex gap-md group">
+<div class="w-14 text-right pt-4">
+<span class="font-label-sm text-label-sm text-on-surface-variant">08:30 AM</span>
+</div>
+<div class="z-10 mt-5 w-4 h-4 rounded-full bg-surface-container-high border-2 border-tertiary-fixed group-hover:scale-125 transition-transform"></div>
+<div class="flex-1 bg-white p-md rounded-[1.5rem] border border-surface-variant card-shadow flex flex-col md:flex-row gap-md items-start">
+<div class="bg-tertiary-fixed p-3 rounded-2xl text-tertiary">
+<span class="material-symbols-outlined">sentiment_very_satisfied</span>
+</div>
+<div class="flex-1">
+<p class="font-label-lg text-label-lg text-on-surface">
+<span class="font-bold">Mom</span> felt <span class="text-tertiary">'Happy'</span> today.
+                                </p>
+<p class="mt-sm text-body-md text-on-surface-variant italic">"Enjoyed sitting in the sun for 20 minutes this morning."</p>
+<div class="mt-md flex gap-sm">
+<button class="flex items-center gap-xs text-on-surface-variant hover:text-primary transition-colors py-2 px-4 rounded-full bg-surface-container-low font-label-sm">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+                                        Heart
+                                    </button>
+<div class="flex -space-x-2 ml-auto">
+<div class="w-8 h-8 rounded-full border-2 border-white bg-primary-fixed flex items-center justify-center text-[10px] font-bold">R</div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-tertiary-fixed flex items-center justify-center text-[10px] font-bold">S</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Timeline Section: Yesterday -->
+<div class="space-y-md">
+<div class="flex items-center gap-md pt-lg">
+<div class="w-14 text-right">
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container-high px-2 py-1 rounded">Yesterday</span>
+</div>
+<div class="w-4 h-4 rounded-full bg-secondary ring-4 ring-secondary-fixed"></div>
+<div class="h-px flex-1 bg-outline-variant/30"></div>
+</div>
+<!-- Item 3: Visit Notes -->
+<div class="flex gap-md group">
+<div class="w-14 text-right pt-4">
+<span class="font-label-sm text-label-sm text-on-surface-variant">04:15 PM</span>
+</div>
+<div class="z-10 mt-5 w-4 h-4 rounded-full bg-surface-container-high border-2 border-secondary group-hover:scale-125 transition-transform"></div>
+<div class="flex-1 bg-white p-md rounded-[1.5rem] border border-surface-variant card-shadow">
+<div class="flex flex-col md:flex-row gap-md items-start">
+<div class="bg-secondary-fixed p-3 rounded-2xl text-secondary">
+<span class="material-symbols-outlined">edit_note</span>
+</div>
+<div class="flex-1">
+<p class="font-label-lg text-label-lg text-on-surface">
+<span class="font-bold">Dr. Visit notes</span> added by <span class="font-bold">Sneha</span>.
+                                    </p>
+<div class="mt-sm bg-surface-container p-sm rounded-xl border-l-4 border-secondary">
+<p class="text-body-md text-on-surface-variant">Dr. Mehta advised reducing salt intake. Next follow-up in 3 weeks. Vital signs are stable.</p>
+</div>
+<div class="mt-md flex gap-sm">
+<button class="flex items-center gap-xs text-on-surface-variant hover:text-primary transition-colors py-2 px-4 rounded-full bg-surface-container-low font-label-sm">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+                                            1
+                                        </button>
+<button class="flex items-center gap-xs text-on-surface-variant hover:text-primary transition-colors py-2 px-4 rounded-full bg-surface-container-low font-label-sm">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+                                            View Report
+                                        </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 4: Document -->
+<div class="flex gap-md group">
+<div class="w-14 text-right pt-4">
+<span class="font-label-sm text-label-sm text-on-surface-variant">02:00 PM</span>
+</div>
+<div class="z-10 mt-5 w-4 h-4 rounded-full bg-surface-container-high border-2 border-outline group-hover:scale-125 transition-transform"></div>
+<div class="flex-1 bg-white p-md rounded-[1.5rem] border border-surface-variant card-shadow flex flex-col md:flex-row gap-md items-start">
+<div class="bg-surface-container-high p-3 rounded-2xl text-on-surface-variant">
+<span class="material-symbols-outlined">description</span>
+</div>
+<div class="flex-1">
+<p class="font-label-lg text-label-lg text-on-surface">
+                                    New document: <span class="font-bold text-primary">Prescription_Nov.pdf</span> uploaded.
+                                </p>
+<div class="mt-md">
+<button class="flex items-center gap-sm bg-surface-container-low text-on-surface border border-outline-variant px-md py-sm rounded-xl font-label-sm hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined">download</span>
+                                        Download PDF (2.4 MB)
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Spacing -->
+<div class="h-xl"></div>
+</main>
+</div>
+<!-- Mobile Bottom Navigation -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-surface shadow-[0_-2px_10px_rgba(0,0,0,0.05)] flex justify-around items-center h-touch-target z-50 px-md">
+<a class="flex flex-col items-center justify-center text-on-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-[10px] font-label-sm">Feed</span>
+</a>
+<div class="relative -top-4">
+<button class="w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<a class="flex flex-col items-center justify-center text-on-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined">medical_services</span>
+<span class="text-[10px] font-label-sm">Meds</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant transition-colors" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="text-[10px] font-label-sm">Profile</span>
+</a>
+</nav>
+<!-- Global Footer -->
+<footer class="w-full py-xl bg-surface-container-highest">
+<div class="max-w-container-max mx-auto px-md grid grid-cols-1 md:grid-cols-2 gap-md items-center">
+<div>
+<div class="font-headline-md text-headline-md text-primary mb-2">CareCircle</div>
+<p class="font-label-sm text-label-sm text-on-secondary-container">© 2024 CareCircle - The Digital Hearth. Built for Families.</p>
+</div>
+<div class="flex flex-wrap gap-md md:justify-end">
+<a class="font-label-sm text-label-sm text-on-secondary-container hover:text-primary hover:underline decoration-primary transition-opacity opacity-90 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-secondary-container hover:text-primary hover:underline decoration-primary transition-opacity opacity-90 hover:opacity-100" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm text-on-secondary-container hover:text-primary hover:underline decoration-primary transition-opacity opacity-90 hover:opacity-100" href="#">Accessibility</a>
+<a class="font-label-sm text-label-sm text-on-secondary-container hover:text-primary hover:underline decoration-primary transition-opacity opacity-90 hover:opacity-100" href="#">Contact Us</a>
+</div>
+</div>
+</footer>
+<script>
+        // Simple Interaction logic for Micro-interactions
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                if (this.querySelector('.material-symbols-outlined')) {
+                    const icon = this.querySelector('.material-symbols-outlined');
+                    if (icon.innerText === 'favorite') {
+                        icon.style.fontVariationSettings = "'FILL' 1";
+                        icon.classList.add('text-error');
+                        // Floating heart effect
+                        createHeart(e.clientX, e.clientY);
+                    }
+                }
+            });
+        });
+
+        function createHeart(x, y) {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.style.position = 'fixed';
+            heart.style.left = x + 'px';
+            heart.style.top = y + 'px';
+            heart.style.pointerEvents = 'none';
+            heart.style.transition = 'all 1s ease-out';
+            heart.style.zIndex = '100';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.style.transform = `translateY(-100px) scale(1.5)`;
+                heart.style.opacity = '0';
+            }, 10);
+            
+            setTimeout(() => heart.remove(), 1000);
+        }
+    </script>
+</body></html>

@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: "Segoe UI", "Trebuchet MS", "Arial", sans-serif;
+  --font-devanagari: "Nirmala UI", "Mangal", "Kohinoor Devanagari", sans-serif;
+  --background: #fff8f1;
+  --foreground: #1d1b17;
+  --primary: #274437;
+  --primary-soft: #bfe3cd;
+  --primary-deep: #3e5c4e;
+  --surface: #fffdf9;
+  --surface-raised: #ffffff;
+  --surface-muted: #f4ede5;
+  --line: #e4ddd5;
+  --text-muted: #656460;
+  --accent: #ccead9;
+  --accent2: #d5ecf6;
+  --success: #264937;
+  --success-bg: #cfe9d8;
+  --warning: #6c6558;
+  --warning-bg: #ece4db;
+  --danger: #a11d1d;
+  --danger-bg: #ffdcd6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.55;
+  background:
+    radial-gradient(circle at top right, rgba(213, 236, 246, 0.45), transparent 26%),
+    radial-gradient(circle at top left, rgba(204, 234, 217, 0.35), transparent 24%),
+    var(--background);
+  color: var(--foreground);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+#__next,
+body > div:first-child {
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.app-shell-bg {
+  background: linear-gradient(180deg, #fff9f2 0%, #fdf5ec 100%);
+}
+
+.soft-panel {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(16px);
+}
+
+.dotted-panel {
+  background-color: #244636;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.12) 0.75px, transparent 0.75px);
+  background-size: 18px 18px;
+}
+
+.lang-devanagari {
+  font-family: var(--font-devanagari), sans-serif;
+}
+
+.app-sidebar-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(101, 100, 96, 0.24) transparent;
+}
+
+.app-sidebar-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.app-sidebar-scroll::-webkit-scrollbar-thumb {
+  background: rgba(101, 100, 96, 0.24);
+  border-radius: 999px;
+}

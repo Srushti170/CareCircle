@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Family Tasks | CareCircle</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-tint": "#466556",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-container": "#656460",
+                      "on-primary": "#ffffff",
+                      "surface-dim": "#dfd9d2",
+                      "on-tertiary-fixed": "#001f29",
+                      "primary-fixed-dim": "#adcebc",
+                      "on-error-container": "#93000a",
+                      "secondary": "#5f5e5a",
+                      "surface-container-highest": "#e8e2db",
+                      "surface-container-high": "#ede7e0",
+                      "inverse-surface": "#33302b",
+                      "surface": "#fff8f1",
+                      "on-tertiary-container": "#a8d2e5",
+                      "error": "#ba1a1a",
+                      "on-secondary-fixed-variant": "#474743",
+                      "tertiary": "#174454",
+                      "on-surface-variant": "#424844",
+                      "on-tertiary-fixed-variant": "#214c5c",
+                      "on-primary-fixed-variant": "#2f4d3f",
+                      "surface-container-low": "#f9f3eb",
+                      "background": "#fff8f1",
+                      "secondary-fixed": "#e5e2dc",
+                      "primary-fixed": "#c8ead8",
+                      "on-secondary": "#ffffff",
+                      "primary-container": "#3e5c4e",
+                      "surface-container-lowest": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "inverse-on-surface": "#f6f0e9",
+                      "on-surface": "#1d1b17",
+                      "tertiary-fixed-dim": "#a3cde1",
+                      "on-secondary-fixed": "#1c1c18",
+                      "surface-container": "#f3ede6",
+                      "surface-variant": "#e8e2db",
+                      "on-error": "#ffffff",
+                      "on-primary-fixed": "#022015",
+                      "secondary-container": "#e5e2dc",
+                      "surface-bright": "#fff8f1",
+                      "primary": "#274437",
+                      "outline-variant": "#c1c8c3",
+                      "tertiary-container": "#325b6c",
+                      "tertiary-fixed": "#bfe9fd",
+                      "outline": "#727974",
+                      "on-background": "#1d1b17",
+                      "inverse-primary": "#adcebc",
+                      "on-primary-container": "#b2d3c1",
+                      "secondary-fixed-dim": "#c9c6c1"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "md": "20px",
+                      "sm": "12px",
+                      "lg": "32px",
+                      "container-max": "1200px",
+                      "xs": "4px",
+                      "xl": "48px",
+                      "base": "8px",
+                      "touch-target": "56px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "body-lg": ["Plus Jakarta Sans"],
+                      "display": ["Plus Jakarta Sans"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "label-lg": ["Plus Jakarta Sans"],
+                      "body-md": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "label-sm": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-lg": ["20px", {"lineHeight": "30px", "fontWeight": "400"}],
+                      "display": ["40px", {"lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                      "label-lg": ["18px", {"lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                      "body-md": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                      "label-sm": ["16px", {"lineHeight": "20px", "fontWeight": "500"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #fff8f1; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .task-card {
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+        }
+        .task-card:hover {
+            transform: translateY(-4px);
+        }
+        .mark-done-btn:active {
+            transform: scale(0.95);
+        }
+        @keyframes ripple {
+            to { transform: scale(4); opacity: 0; }
+        }
+        .ripple-effect {
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen pb-xl">
+<!-- Top Navigation Bar -->
+<header class="w-full top-0 sticky z-50 bg-surface shadow-sm shadow-surface-tint/10">
+<div class="flex justify-between items-center h-touch-target px-md max-w-container-max mx-auto">
+<div class="text-headline-md font-headline-md font-bold text-primary">CareCircle</div>
+<nav class="hidden md:flex items-center gap-lg h-full">
+<a class="h-full flex items-center px-sm text-on-surface-variant hover:bg-surface-container-low transition-colors font-label-lg text-label-lg" href="#">Dashboard</a>
+<a class="h-full flex items-center px-sm text-on-surface-variant hover:bg-surface-container-low transition-colors font-label-lg text-label-lg" href="#">Medications</a>
+<a class="h-full flex items-center px-sm text-primary border-b-2 border-primary transition-colors font-label-lg text-label-lg" href="#">Tasks</a>
+<a class="h-full flex items-center px-sm text-on-surface-variant hover:bg-surface-container-low transition-colors font-label-lg text-label-lg" href="#">Appointments</a>
+</nav>
+<div class="flex items-center gap-sm">
+<button class="p-xs rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-primary" data-icon="language">language</span>
+</button>
+<button class="p-xs rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-primary" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Side Navigation (Web) -->
+<aside class="hidden lg:flex h-screen w-64 fixed left-0 top-0 flex-col py-md bg-surface-container-low shadow-md shadow-surface-tint/5 z-40 mt-touch-target">
+<div class="px-md mb-lg">
+<div class="flex items-center gap-sm mb-xs">
+<img alt="Primary Caregiver Profile" class="w-12 h-12 rounded-full object-cover border-2 border-primary-fixed" data-alt="A warm, professional portrait of a woman in her late 30s with a kind expression, softly lit by morning sunlight in a domestic setting. She has a gentle smile, representing a compassionate family caregiver. The background is slightly blurred, showing a cozy, organized home interior with soft sage and cream tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwSYp6ySe2W6sbSyJRoaSBDy3Tw61KvZS2K8W8Mkz0OWAaM81hPtlRYcouzhokPfHcmNJgWqrehKHkpKbAulBglMyBepxr37qWKliqiOeVRjn6c4b1aGTQOGPv7MvFBCERyEYWAKJ6gYpFc4iqsnrTj0nF59QiVQBpJP2K9oQ_Kfy45h_Uj6WHFVHn0iyiVGPVxzPiZHyMRNi4GGfdpSmfqhWJT7iUnEVlIJQfljEpyKtGWy3HKaT9ZA"/>
+<div>
+<p class="font-label-lg text-label-lg text-primary">Anjali R.</p>
+<p class="text-xs text-on-surface-variant">Family Admin</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-sm px-md py-sm mx-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-lg text-label-lg">Dashboard</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm mx-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="medical_services">medical_services</span>
+<span class="font-label-lg text-label-lg">Medications</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm mx-2 rounded-lg bg-primary-container text-on-primary-container transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="checklist">checklist</span>
+<span class="font-label-lg text-label-lg">Tasks</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm mx-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="event">event</span>
+<span class="font-label-lg text-label-lg">Appointments</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm mx-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-label-lg text-label-lg">Family Feed</span>
+</a>
+</nav>
+<div class="px-md mt-auto pt-md">
+<button class="w-full py-sm px-md bg-error text-on-error rounded-xl font-label-lg text-label-lg flex items-center justify-center gap-xs hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" data-icon="emergency">emergency</span>
+                Emergency Help
+            </button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="lg:pl-64 max-w-container-max mx-auto px-md pt-lg">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-xl">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-primary mb-xs">Family Tasks</h1>
+<p class="text-on-surface-variant font-body-md text-body-md max-w-xl">
+                    Coordinating care for Dad. Small acts of kindness, organized together.
+                </p>
+</div>
+<button class="h-touch-target px-lg bg-primary text-on-primary rounded-full flex items-center justify-center gap-sm shadow-md hover:shadow-lg active:scale-95 transition-all font-label-lg text-label-lg">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                New Task
+            </button>
+</div>
+<!-- Filters -->
+<div class="flex items-center gap-base mb-lg p-xs bg-surface-container-low rounded-full w-fit">
+<button class="px-lg py-sm bg-surface-container-highest text-primary rounded-full font-label-lg text-label-lg transition-colors">To Do</button>
+<button class="px-lg py-sm text-on-surface-variant hover:bg-surface-container-high rounded-full font-label-lg text-label-lg transition-colors">Completed</button>
+</div>
+<!-- Task Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-lg">
+<!-- Task Card 1: Groceries -->
+<div class="task-card bg-surface-container-lowest border border-surface-container-highest rounded-[1.5rem] p-md shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-md">
+<span class="px-sm py-xs bg-error-container text-on-error-container rounded-lg font-label-sm text-label-sm flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]" data-icon="priority_high">priority_high</span>
+                            Important
+                        </span>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm leading-tight">Buy groceries for Dad</h3>
+<div class="space-y-base mb-lg">
+<div class="flex items-center gap-sm text-on-secondary-container">
+<span class="material-symbols-outlined text-[20px]" data-icon="person">person</span>
+<span class="font-body-md text-body-md">Assigned to: Ravi</span>
+</div>
+<div class="flex items-center gap-sm text-on-secondary-container">
+<span class="material-symbols-outlined text-[20px]" data-icon="calendar_today">calendar_today</span>
+<span class="font-body-md text-body-md">Due: Tomorrow</span>
+</div>
+</div>
+</div>
+<button class="mark-done-btn w-full h-touch-target bg-primary-container text-on-primary-container rounded-xl flex items-center justify-center gap-sm font-label-lg text-label-lg ripple-effect" onclick="this.closest('.task-card').style.opacity='0.5'; this.innerText='Done!'">
+<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+                    Mark as Done
+                </button>
+</div>
+<!-- Task Card 2: Medicine -->
+<div class="task-card bg-surface-container-lowest border border-surface-container-highest rounded-[1.5rem] p-md shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-md">
+<span class="px-sm py-xs bg-primary-fixed text-on-primary-fixed-variant rounded-lg font-label-sm text-label-sm flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]" data-icon="schedule">schedule</span>
+                            Routine
+                        </span>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm leading-tight">Refill Blood Pressure Meds</h3>
+<div class="space-y-base mb-lg">
+<div class="flex items-center gap-sm text-on-secondary-container">
+<span class="material-symbols-outlined text-[20px]" data-icon="person">person</span>
+<span class="font-body-md text-body-md">Assigned to: Anjali</span>
+</div>
+<div class="flex items-center gap-sm text-on-secondary-container">
+<span class="material-symbols-outlined text-[20px]" data-icon="calendar_today">calendar_today</span>
+<span class="font-body-md text-body-md">Due: Friday, 4 Oct</span>
+</div>
+</div>
+</div>
+<button class="mark-done-btn w-full h-touch-target bg-primary-container text-on-primary-container rounded-xl flex items-center justify-center gap-sm font-label-lg text-label-lg ripple-effect">
+<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+                    Mark as Done
+                </button>
+</div>
+<!-- Task Card 3: Social -->
+<div class="task-card bg-surface-container-lowest border border-surface-container-highest rounded-[1.5rem] p-md shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-md">
+<span class="px-sm py-xs bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-lg font-label-sm text-label-sm flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]" data-icon="favorite">favorite</span>
+                            Family
+                        </span>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm leading-tight">Video call with Grandpa</h3>
+<div class="space-y-base mb-lg">
+<div class="flex items-center gap-sm text-on-secondary-container">
+<span class="material-symbols-outlined text-[20px]" data-icon="person">person</span>
+<span class="font-body-md text-body-md">Assigned to: Meena</span>
+</div>
+<div class="flex items-center gap-sm text-on-secondary-container">
+<span class="material-symbols-outlined text-[20px]" data-icon="calendar_today">calendar_today</span>
+<span class="font-body-md text-body-md">Due: Today, 6:00 PM</span>
+</div>
+</div>
+</div>
+<button class="mark-done-btn w-full h-touch-target bg-primary-container text-on-primary-container rounded-xl flex items-center justify-center gap-sm font-label-lg text-label-lg ripple-effect">
+<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+                    Mark as Done
+                </button>
+</div>
+<!-- Empty State / Add Task Bento -->
+<div class="task-card bg-surface-container-low border-2 border-dashed border-outline-variant rounded-[1.5rem] p-md flex flex-col items-center justify-center text-center cursor-pointer hover:bg-surface-container-high group transition-all">
+<div class="w-16 h-16 bg-surface-container-highest rounded-full flex items-center justify-center mb-md group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-[32px]" data-icon="add_task">add_task</span>
+</div>
+<h3 class="font-label-lg text-label-lg text-primary mb-xs">Need to do something else?</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Click to add a custom task for the family.</p>
+</div>
+</div>
+<!-- Progress Section -->
+<section class="mt-xl p-lg bg-primary-container text-on-primary-container rounded-[2rem] relative overflow-hidden">
+<div class="relative z-10">
+<h2 class="font-headline-md text-headline-md mb-sm">Family Progress</h2>
+<div class="flex flex-col md:flex-row items-center gap-lg">
+<div class="flex-1 w-full">
+<div class="flex justify-between mb-xs">
+<span class="font-label-lg text-label-lg">Weekly Goals</span>
+<span class="font-label-lg text-label-lg">12 / 15 Done</span>
+</div>
+<div class="w-full h-4 bg-primary/20 rounded-full overflow-hidden">
+<div class="h-full bg-on-primary-container w-[80%] rounded-full"></div>
+</div>
+</div>
+<div class="flex -space-x-4">
+<img class="w-12 h-12 rounded-full border-2 border-primary-container object-cover" data-alt="Close up portrait of a middle-aged man with a kind face, wearing a simple linen shirt, smiling warmly in a garden setting. Soft natural lighting, sage and cream color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwaDNag9Z278YztFi05A7eFhspQHMihUE_AAIEAOtjHf78GDdIJgEFobXSbtLeH7KASTA4YMBoKQV9f0VhJ6AHak2NNT-dCOqd4Ry5jCDpgGzb3C4ZDgWGZYFlm0rdpwP0eB2lotSeircj7RS1-NagqJWe8JUY8jMPfaW1sDXM1raujOxZ8JlKkZPcH_jZBUqJV529ZNQvUeCAzElBwuPj3TUyH3OR_Ze-q1J0Qn9Ywyl_l1S7VACCig"/>
+<img class="w-12 h-12 rounded-full border-2 border-primary-container object-cover" data-alt="Portrait of a young woman with dark hair and a joyful expression, wearing a soft pastel sweater. High-key lighting, minimalist clean background, warm and inviting atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD42YCTzqrvTUTSO76K7gx90t7yjZ4ehqVrO_uYciYsF3JM4TPyFi27VDyy9bUP06HWrhNA65F8w-Zw4WR7vjOletfIaUpGgiB1jsrd-66IUkVQyK6lowHejCQRqrj1lkL-j9lnf35_L9MczNK4MMHjnx5HqLONEEtA98QNpPHdleD9mYLKVMDTlu2mEjUJe89XtzMCKUY8LRDZRMlHBRhLM8zbHfQcxsMqQxvHpu4MPkbytnyXeaW16Q"/>
+<div class="w-12 h-12 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-xs border-2 border-primary-container">+3</div>
+</div>
+</div>
+</div>
+<!-- Atmospheric background decoration -->
+<div class="absolute -right-10 -bottom-10 w-40 h-40 bg-on-primary-container opacity-10 rounded-full blur-3xl"></div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-xl mt-xl bg-surface-container-highest">
+<div class="max-w-container-max mx-auto px-md grid grid-cols-1 md:grid-cols-2 gap-md items-center">
+<div>
+<p class="font-headline-md text-headline-md text-primary mb-xs">CareCircle</p>
+<p class="font-label-sm text-label-sm text-on-secondary-container">© 2024 CareCircle - The Digital Hearth. Built for Families.</p>
+</div>
+<div class="flex flex-wrap gap-md md:justify-end">
+<a class="font-label-sm text-label-sm text-on-secondary-container hover:text-primary hover:underline decoration-primary transition-opacity opacity-90 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-secondary-container hover:text-primary hover:underline decoration-primary transition-opacity opacity-90 hover:opacity-100" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm text-on-secondary-container hover:text-primary hover:underline decoration-primary transition-opacity opacity-90 hover:opacity-100" href="#">Accessibility</a>
+<a class="font-label-sm text-label-sm text-on-secondary-container hover:text-primary hover:underline decoration-primary transition-opacity opacity-90 hover:opacity-100" href="#">Contact Us</a>
+</div>
+</div>
+</footer>
+<!-- Mobile Navigation -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 h-touch-target bg-surface shadow-[0_-2px_10px_rgba(0,0,0,0.05)] flex items-center justify-around px-md z-50">
+<button class="flex flex-col items-center justify-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-[10px] font-label-sm">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="medical_services">medical_services</span>
+<span class="text-[10px] font-label-sm">Meds</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-xs text-primary">
+<span class="material-symbols-outlined" data-icon="checklist" style="font-variation-settings: 'FILL' 1;">checklist</span>
+<span class="text-[10px] font-bold">Tasks</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="text-[10px] font-label-sm">Family</span>
+</button>
+</nav>
+<script>
+        // Micro-interaction for buttons
+        document.querySelectorAll('.mark-done-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const circle = document.createElement('span');
+                const diameter = Math.max(button.clientWidth, button.clientHeight);
+                const radius = diameter / 2;
+
+                circle.style.width = circle.style.height = `${diameter}px`;
+                circle.style.left = `${e.clientX - (button.offsetLeft + radius)}px`;
+                circle.style.top = `${e.clientY - (button.offsetTop + radius)}px`;
+                circle.classList.add('ripple');
+                
+                const ripple = button.getElementsByClassName('ripple')[0];
+                if (ripple) { ripple.remove(); }
+                button.appendChild(circle);
+
+                // Simulate success state
+                setTimeout(() => {
+                    button.classList.remove('bg-primary-container');
+                    button.classList.add('bg-surface-container-highest');
+                    button.classList.add('text-on-surface-variant');
+                    button.innerHTML = '<span class="material-symbols-outlined">check</span> Task Done';
+                    button.disabled = true;
+                }, 400);
+            });
+        });
+    </script>
+</body></html>

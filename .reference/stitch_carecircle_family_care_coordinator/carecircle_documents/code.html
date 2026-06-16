@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Document Vault - CareCircle</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-tint": "#466556",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-container": "#656460",
+                      "on-primary": "#ffffff",
+                      "surface-dim": "#dfd9d2",
+                      "on-tertiary-fixed": "#001f29",
+                      "primary-fixed-dim": "#adcebc",
+                      "on-error-container": "#93000a",
+                      "secondary": "#5f5e5a",
+                      "surface-container-highest": "#e8e2db",
+                      "surface-container-high": "#ede7e0",
+                      "inverse-surface": "#33302b",
+                      "surface": "#fff8f1",
+                      "on-tertiary-container": "#a8d2e5",
+                      "error": "#ba1a1a",
+                      "on-secondary-fixed-variant": "#474743",
+                      "tertiary": "#174454",
+                      "on-surface-variant": "#424844",
+                      "on-tertiary-fixed-variant": "#214c5c",
+                      "on-primary-fixed-variant": "#2f4d3f",
+                      "surface-container-low": "#f9f3eb",
+                      "background": "#fff8f1",
+                      "secondary-fixed": "#e5e2dc",
+                      "primary-fixed": "#c8ead8",
+                      "on-secondary": "#ffffff",
+                      "primary-container": "#3e5c4e",
+                      "surface-container-lowest": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "inverse-on-surface": "#f6f0e9",
+                      "on-surface": "#1d1b17",
+                      "tertiary-fixed-dim": "#a3cde1",
+                      "on-secondary-fixed": "#1c1c18",
+                      "surface-container": "#f3ede6",
+                      "surface-variant": "#e8e2db",
+                      "on-error": "#ffffff",
+                      "on-primary-fixed": "#022015",
+                      "secondary-container": "#e5e2dc",
+                      "surface-bright": "#fff8f1",
+                      "primary": "#274437",
+                      "outline-variant": "#c1c8c3",
+                      "tertiary-container": "#325b6c",
+                      "tertiary-fixed": "#bfe9fd",
+                      "outline": "#727974",
+                      "on-background": "#1d1b17",
+                      "inverse-primary": "#adcebc",
+                      "on-primary-container": "#b2d3c1",
+                      "secondary-fixed-dim": "#c9c6c1"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "md": "20px",
+                      "sm": "12px",
+                      "lg": "32px",
+                      "container-max": "1200px",
+                      "xs": "4px",
+                      "xl": "48px",
+                      "base": "8px",
+                      "touch-target": "56px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "body-lg": ["Plus Jakarta Sans"],
+                      "display": ["Plus Jakarta Sans"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "label-lg": ["Plus Jakarta Sans"],
+                      "body-md": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "label-sm": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-lg": ["20px", {"lineHeight": "30px", "fontWeight": "400"}],
+                      "display": ["40px", {"lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                      "label-lg": ["18px", {"lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                      "body-md": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                      "label-sm": ["16px", {"lineHeight": "20px", "fontWeight": "500"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #fff8f1;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .category-card:hover .icon-bg {
+            background-color: #3e5c4e;
+            color: #b2d3c1;
+        }
+        .file-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .file-card:hover {
+            transform: translateY(-4px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen pb-xl">
+<!-- Top Navigation Bar -->
+<header class="w-full top-0 sticky z-50 bg-surface shadow-sm shadow-surface-tint/10">
+<div class="flex justify-between items-center h-touch-target px-md max-w-container-max mx-auto">
+<div class="text-headline-md font-headline-md font-bold text-primary">CareCircle</div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-primary hover:bg-surface-container-low transition-colors p-base rounded-full" data-icon="language">language</button>
+<button class="material-symbols-outlined text-primary hover:bg-surface-container-low transition-colors p-base rounded-full" data-icon="account_circle">account_circle</button>
+</div>
+</div>
+</header>
+<div class="flex max-w-container-max mx-auto px-md pt-lg gap-lg">
+<!-- Side Navigation Bar (Desktop) -->
+<aside class="hidden md:flex flex-col w-64 h-[calc(100vh-100px)] sticky top-24 bg-surface-container-low rounded-xl py-md shadow-md shadow-surface-tint/5">
+<div class="px-md pb-md">
+<div class="font-headline-md text-headline-md text-primary">CareCircle</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Family Portal</div>
+</div>
+<nav class="flex-grow space-y-1">
+<a class="flex items-center gap-sm px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg mx-2 my-1 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-lg text-label-lg">Dashboard</span>
+</a>
+<a class="flex items-center gap-sm px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg mx-2 my-1 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="medical_services">medical_services</span>
+<span class="font-label-lg text-label-lg">Medications</span>
+</a>
+<a class="flex items-center gap-sm px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg mx-2 my-1 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="checklist">checklist</span>
+<span class="font-label-lg text-label-lg">Tasks</span>
+</a>
+<a class="flex items-center gap-sm px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg mx-2 my-1 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="event">event</span>
+<span class="font-label-lg text-label-lg">Appointments</span>
+</a>
+<a class="flex items-center gap-sm px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg mx-2 my-1 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-label-lg text-label-lg">Family Feed</span>
+</a>
+<a class="flex items-center gap-sm px-md py-3 bg-primary-container text-on-primary-container rounded-lg mx-2 my-1 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-label-lg text-label-lg">Documents</span>
+</a>
+</nav>
+<div class="mt-auto px-md space-y-1">
+<button class="w-full py-3 mb-md bg-error text-on-error rounded-xl font-label-lg flex items-center justify-center gap-base active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="emergency">emergency</span>
+                    Emergency Help
+                </button>
+<a class="flex items-center gap-sm px-md py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="settings">settings</span>
+<span class="text-label-sm">Settings</span>
+</a>
+<a class="flex items-center gap-sm px-md py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="help">help</span>
+<span class="text-label-sm">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-grow">
+<!-- Header Section -->
+<section class="mb-lg">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-md">
+<div>
+<h1 class="font-display text-display text-primary">Document Vault</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">Securely organized records for your family's health.</p>
+</div>
+<button class="h-touch-target px-lg bg-primary text-on-primary rounded-full font-label-lg flex items-center justify-center gap-base active:scale-95 transition-transform shadow-md hover:bg-primary-container hover:text-on-primary-container">
+<span class="material-symbols-outlined" data-icon="upload_file">upload_file</span>
+                        Upload Document
+                    </button>
+</div>
+</section>
+<!-- Quick Categories -->
+<section class="grid grid-cols-2 lg:grid-cols-4 gap-md mb-xl">
+<button class="category-card flex flex-col items-center justify-center p-lg bg-surface-container-low rounded-2xl border border-outline-variant/30 hover:border-primary transition-all group">
+<div class="icon-bg w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center text-primary mb-md transition-colors">
+<span class="material-symbols-outlined scale-125" data-icon="prescriptions">prescriptions</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface">Prescriptions</span>
+</button>
+<button class="category-card flex flex-col items-center justify-center p-lg bg-surface-container-low rounded-2xl border border-outline-variant/30 hover:border-primary transition-all group">
+<div class="icon-bg w-16 h-16 rounded-full bg-tertiary-fixed flex items-center justify-center text-tertiary mb-md transition-colors">
+<span class="material-symbols-outlined scale-125" data-icon="biotech">biotech</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface">Lab Reports</span>
+</button>
+<button class="category-card flex flex-col items-center justify-center p-lg bg-surface-container-low rounded-2xl border border-outline-variant/30 hover:border-primary transition-all group">
+<div class="icon-bg w-16 h-16 rounded-full bg-secondary-fixed flex items-center justify-center text-secondary mb-md transition-colors">
+<span class="material-symbols-outlined scale-125" data-icon="assignment_return">assignment_return</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface">Discharge Papers</span>
+</button>
+<button class="category-card flex flex-col items-center justify-center p-lg bg-surface-container-low rounded-2xl border border-outline-variant/30 hover:border-primary transition-all group">
+<div class="icon-bg w-16 h-16 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant mb-md transition-colors">
+<span class="material-symbols-outlined scale-125" data-icon="badge">badge</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface">Identity Docs</span>
+</button>
+</section>
+<!-- Document List Section -->
+<section>
+<div class="flex items-center justify-between mb-md">
+<h2 class="font-headline-md text-headline-md text-primary">Recent Documents</h2>
+<div class="flex items-center gap-base">
+<button class="p-base rounded-full hover:bg-surface-container-high material-symbols-outlined text-on-surface-variant" data-icon="sort">sort</button>
+<button class="p-base rounded-full hover:bg-surface-container-high material-symbols-outlined text-on-surface-variant" data-icon="grid_view">grid_view</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- File Card 1 -->
+<div class="file-card bg-surface-container-lowest p-md rounded-2xl border border-outline-variant/50 flex items-center gap-md shadow-sm shadow-surface-tint/5">
+<div class="w-14 h-14 bg-error-container/20 text-error rounded-xl flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined" data-icon="picture_as_pdf">picture_as_pdf</span>
+</div>
+<div class="flex-grow min-w-0">
+<h3 class="font-label-lg text-label-lg text-on-surface truncate">Blood_Test_Oct.pdf</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Uploaded Oct 12, 2024</p>
+</div>
+<div class="flex gap-xs">
+<button class="p-base rounded-full hover:bg-surface-container-low text-primary material-symbols-outlined" data-icon="visibility" title="View">visibility</button>
+<button class="p-base rounded-full hover:bg-surface-container-low text-primary material-symbols-outlined" data-icon="download" title="Download">download</button>
+</div>
+</div>
+<!-- File Card 2 -->
+<div class="file-card bg-surface-container-lowest p-md rounded-2xl border border-outline-variant/50 flex items-center gap-md shadow-sm shadow-surface-tint/5">
+<div class="w-14 h-14 bg-primary-fixed/30 text-primary rounded-xl flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+</div>
+<div class="flex-grow min-w-0">
+<h3 class="font-label-lg text-label-lg text-on-surface truncate">Cardiology_Discharge.docx</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Uploaded Sep 28, 2024</p>
+</div>
+<div class="flex gap-xs">
+<button class="p-base rounded-full hover:bg-surface-container-low text-primary material-symbols-outlined" data-icon="visibility" title="View">visibility</button>
+<button class="p-base rounded-full hover:bg-surface-container-low text-primary material-symbols-outlined" data-icon="download" title="Download">download</button>
+</div>
+</div>
+<!-- File Card 3 -->
+<div class="file-card bg-surface-container-lowest p-md rounded-2xl border border-outline-variant/50 flex items-center gap-md shadow-sm shadow-surface-tint/5">
+<div class="w-14 h-14 bg-tertiary-fixed/30 text-tertiary rounded-xl flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined" data-icon="image">image</span>
+</div>
+<div class="flex-grow min-w-0">
+<h3 class="font-label-lg text-label-lg text-on-surface truncate">Adhaar_Card_Dad.jpg</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Uploaded Sep 15, 2024</p>
+</div>
+<div class="flex gap-xs">
+<button class="p-base rounded-full hover:bg-surface-container-low text-primary material-symbols-outlined" data-icon="visibility" title="View">visibility</button>
+<button class="p-base rounded-full hover:bg-surface-container-low text-primary material-symbols-outlined" data-icon="download" title="Download">download</button>
+</div>
+</div>
+<!-- File Card 4 -->
+<div class="file-card bg-surface-container-lowest p-md rounded-2xl border border-outline-variant/50 flex items-center gap-md shadow-sm shadow-surface-tint/5">
+<div class="w-14 h-14 bg-error-container/20 text-error rounded-xl flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined" data-icon="picture_as_pdf">picture_as_pdf</span>
+</div>
+<div class="flex-grow min-w-0">
+<h3 class="font-label-lg text-label-lg text-on-surface truncate">Insurance_Policy_2024.pdf</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Uploaded Jan 05, 2024</p>
+</div>
+<div class="flex gap-xs">
+<button class="p-base rounded-full hover:bg-surface-container-low text-primary material-symbols-outlined" data-icon="visibility" title="View">visibility</button>
+<button class="p-base rounded-full hover:bg-surface-container-low text-primary material-symbols-outlined" data-icon="download" title="Download">download</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Featured Image Section -->
+<section class="mt-xl rounded-3xl overflow-hidden relative h-64 shadow-lg group">
+<img alt="Organized documents" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A serene and organized home office desk with a warm glowing lamp, a potted sage green plant, and neatly stacked folders on a light wood surface. The lighting is soft and natural, creating a stress-free and secure atmosphere. The color palette features warm creams, soft greens, and natural textures, reflecting a calm digital hearth aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKf0w7NnhWZrMMElB9c5PIs5LdOxcLR7D_LuSg3bKia0eolhUaI8YbWbjQ3BArJaHisfaqBAduApVE1WWaSsQ2dnI4-tXn0i8oqDzCEixmCaVGEwisTPLboZ_6kfYfijYx4ytj56vfFf-cayzOhA3x0EndPdukiQPOAeq8Q0uuM5bERNBvZSJgW2W9ZpOwHwwL2T_jdfj4C8MSE6yKP-T5zq7WCnerMKdO9fLDuNTCgrRVWZb9BFasQQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex flex-col justify-end p-lg">
+<h4 class="text-white font-headline-md text-headline-md">Your Data is Secure</h4>
+<p class="text-on-primary-container font-label-lg">Encrypted, family-only access for total peace of mind.</p>
+</div>
+</section>
+</main>
+</div>
+<!-- Footer -->
+<footer class="w-full py-xl mt-xl bg-surface-container-highest">
+<div class="max-w-container-max mx-auto px-md grid grid-cols-1 md:grid-cols-2 gap-md">
+<div>
+<div class="font-headline-md text-headline-md text-primary mb-sm">CareCircle</div>
+<p class="text-on-secondary-container font-label-sm max-w-sm">The digital hearth for modern caregiving. Designed with love for the families that keep us whole.</p>
+<p class="font-label-sm text-label-sm text-secondary mt-md">© 2024 CareCircle - The Digital Hearth. Built for Families.</p>
+</div>
+<div class="flex flex-col md:items-end justify-center gap-base">
+<div class="flex flex-wrap gap-md">
+<a class="text-on-secondary-container hover:text-primary transition-colors hover:underline decoration-primary font-label-sm" href="#">Privacy Policy</a>
+<a class="text-on-secondary-container hover:text-primary transition-colors hover:underline decoration-primary font-label-sm" href="#">Terms of Service</a>
+<a class="text-on-secondary-container hover:text-primary transition-colors hover:underline decoration-primary font-label-sm" href="#">Accessibility</a>
+<a class="text-on-secondary-container hover:text-primary transition-colors hover:underline decoration-primary font-label-sm" href="#">Contact Us</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- Mobile Navigation Bar -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 h-touch-target bg-surface shadow-[0_-2px_10px_rgba(0,0,0,0.05)] flex justify-around items-center px-sm z-50">
+<button class="flex flex-col items-center gap-xs text-on-surface-variant active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-[10px] font-label-sm">Home</span>
+</button>
+<button class="flex flex-col items-center gap-xs text-on-surface-variant active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="medical_services">medical_services</span>
+<span class="text-[10px] font-label-sm">Meds</span>
+</button>
+<button class="flex flex-col items-center gap-xs text-primary active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="description" style="font-variation-settings: 'FILL' 1;">description</span>
+<span class="text-[10px] font-label-sm">Docs</span>
+</button>
+<button class="flex flex-col items-center gap-xs text-on-surface-variant active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="text-[10px] font-label-sm">Feed</span>
+</button>
+</nav>
+<script>
+        // Simple micro-interaction for upload button
+        const uploadBtn = document.querySelector('button:has([data-icon="upload_file"])');
+        if(uploadBtn) {
+            uploadBtn.addEventListener('click', () => {
+                alert('Opening secure file uploader...');
+            });
+        }
+
+        // File card click simulation
+        document.querySelectorAll('.file-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                if(!e.target.closest('button')) {
+                    const fileName = card.querySelector('h3').textContent;
+                    alert(`Opening preview for: ${fileName}`);
+                }
+            });
+        });
+    </script>
+</body></html>

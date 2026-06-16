@@ -1,0 +1,130 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+
+import { AuthShell } from "@/components/auth-shell";
+import { useCare } from "@/components/care-provider";
+import { useLanguage } from "@/components/language-provider";
+import { Button, Field, Input, StatusPill } from "@/components/ui";
+import { getAuthCopy } from "@/lib/auth-copy";
+
+export function SignupPageClient() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { locale } = useLanguage();
+  const copy = getAuthCopy(locale);
+  const { hydrated, isAuthenticated, state, signupFromInvite, signupPrimaryCaregiver } = useCare();
+  const inviteCode = searchParams.get("invite")?.toUpperCase() ?? "";
+  const invite = useMemo(
+    () => state.invites.find((item) => item.code === inviteCode && item.status === "pending"),
+    [inviteCode, state.invites]
+  );
+  const isInviteFlow = Boolean(invite);
+  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (!hydrated || !isAuthenticated) {
+      return;
+    }
+    router.replace(state.onboarding.completed ? "/dashboard" : "/onboarding");
+  }, [hydrated, isAuthenticated, router, state.onboarding.completed]);
+
+  useEffect(() => {
+    if (!invite) {
+      return;
+    }
+    setForm((current) => ({
+      ...current,
+      email: invite.email
+    }));
+  }, [invite]);
+
+  return (
+    <AuthShell
+      badge={copy.eyebrow}
+      body={isInviteFlow ? copy.inviteBody : copy.signupBody}
+      title={isInviteFlow ? copy.joinWithInvite : copy.signupTitle}
+    >
+      <div className={locale === "en" ? "" : "lang-devanagari"}>
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <h2 className="text-[2rem] font-semibold tracking-[-0.03em] text-primary">
+              {isInviteFlow ? copy.joinWithInvite : copy.signupTitle}
+            </h2>
+            <p className="mt-2 max-w-2xl text-body text-text-muted">
+              {isInviteFlow ? copy.inviteBody : copy.signupBody}
+            </p>
+          </div>
+          {isInviteFlow && invite ? <StatusPill>{copy.roles[invite.role]}</StatusPill> : null}
+        </div>
+
+        <form
+          className="mt-8 space-y-5"
+          onSubmit={(event) => {
+            event.preventDefault();
+            const result = isInviteFlow
+              ? signupFromInvite({ code: inviteCode, name: form.name, password: form.password })
+              : signupPrimaryCaregiver({ name: form.name, email: form.email, password: form.password });
+            if (!result.ok) {
+              setError(result.message ?? "Unable to continue.");
+              return;
+            }
+            setError("");
+            router.replace(isInviteFlow ? "/dashboard" : "/onboarding");
+          }}
+        >
+          {isInviteFlow && invite ? (
+            <div className="rounded-[20px] bg-surface-muted p-4 text-sm leading-6 text-text-muted">
+              <div className="font-semibold text-primary">{invite.name}</div>
+              <div>{invite.email}</div>
+              <div className="mt-1">{copy.helperInviteCode}</div>
+            </div>
+          ) : null}
+
+          <Field label={copy.fullName}>
+            <Input
+              onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))}
+              placeholder="Aarav Sharma"
+              value={form.name}
+            />
+          </Field>
+
+          <Field label={copy.email}>
+            <Input
+              disabled={isInviteFlow}
+              onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))}
+              placeholder="family@example.com"
+              type="email"
+              value={form.email}
+            />
+          </Field>
+
+          <Field label={copy.password}>
+            <Input
+              onChange={(event) => setForm((current) => ({ ...current, password: event.target.value }))}
+              placeholder="••••••••"
+              type="password"
+              value={form.password}
+            />
+          </Field>
+
+          {error ? <div className="rounded-[18px] bg-danger-bg px-4 py-3 text-sm font-medium text-danger">{error}</div> : null}
+
+          <Button className="w-full" icon="person_add" type="submit">
+            {isInviteFlow ? copy.joinWithInvite : copy.createAccount}
+          </Button>
+        </form>
+
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-3 text-sm text-text-muted">
+          <span>{copy.alreadyAccount}</span>
+          <Link className="font-semibold text-primary" href="/login">
+            {copy.goToLogin}
+          </Link>
+        </div>
+      </div>
+    </AuthShell>
+  );
+}

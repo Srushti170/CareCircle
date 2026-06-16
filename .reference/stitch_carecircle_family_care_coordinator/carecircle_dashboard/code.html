@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CareCircle Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-tint": "#466556",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-container": "#656460",
+                    "on-primary": "#ffffff",
+                    "surface-dim": "#dfd9d2",
+                    "on-tertiary-fixed": "#001f29",
+                    "primary-fixed-dim": "#adcebc",
+                    "on-error-container": "#93000a",
+                    "secondary": "#5f5e5a",
+                    "surface-container-highest": "#e8e2db",
+                    "surface-container-high": "#ede7e0",
+                    "inverse-surface": "#33302b",
+                    "surface": "#fff8f1",
+                    "on-tertiary-container": "#a8d2e5",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed-variant": "#474743",
+                    "tertiary": "#174454",
+                    "on-surface-variant": "#424844",
+                    "on-tertiary-fixed-variant": "#214c5c",
+                    "on-primary-fixed-variant": "#2f4d3f",
+                    "surface-container-low": "#f9f3eb",
+                    "background": "#fff8f1",
+                    "secondary-fixed": "#e5e2dc",
+                    "primary-fixed": "#c8ead8",
+                    "on-secondary": "#ffffff",
+                    "primary-container": "#3e5c4e",
+                    "surface-container-lowest": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "inverse-on-surface": "#f6f0e9",
+                    "on-surface": "#1d1b17",
+                    "tertiary-fixed-dim": "#a3cde1",
+                    "on-secondary-fixed": "#1c1c18",
+                    "surface-container": "#f3ede6",
+                    "surface-variant": "#e8e2db",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed": "#022015",
+                    "secondary-container": "#e5e2dc",
+                    "surface-bright": "#fff8f1",
+                    "primary": "#274437",
+                    "outline-variant": "#c1c8c3",
+                    "tertiary-container": "#325b6c",
+                    "tertiary-fixed": "#bfe9fd",
+                    "outline": "#727974",
+                    "on-background": "#1d1b17",
+                    "inverse-primary": "#adcebc",
+                    "on-primary-container": "#b2d3c1",
+                    "secondary-fixed-dim": "#c9c6c1"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "1.5rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "md": "20px",
+                    "sm": "12px",
+                    "lg": "32px",
+                    "container-max": "1200px",
+                    "xs": "4px",
+                    "xl": "48px",
+                    "base": "8px",
+                    "touch-target": "56px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "display": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "label-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "label-sm": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["20px", {"lineHeight": "30px", "fontWeight": "400"}],
+                    "display": ["40px", {"lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "label-lg": ["18px", {"lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "body-md": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "label-sm": ["16px", {"lineHeight": "20px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #fff8f1;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .soft-card {
+            border: 1px solid #e8e2db;
+            box-shadow: 0 4px 20px -2px rgba(70, 101, 86, 0.05);
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- TopAppBar Shell -->
+<header class="w-full top-0 sticky z-50 bg-surface shadow-sm shadow-surface-tint/10">
+<div class="flex justify-between items-center h-touch-target px-md max-w-container-max mx-auto">
+<div class="flex items-center gap-sm">
+<span class="text-headline-md font-headline-md font-bold text-primary">CareCircle</span>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-sm rounded-full hover:bg-surface-container-low transition-colors active:scale-95">
+<span class="material-symbols-outlined text-primary">language</span>
+</button>
+<div class="flex items-center gap-xs p-xs bg-surface-container-high rounded-full px-sm border border-outline-variant/30">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+<span class="font-label-sm text-label-sm text-on-surface">Primary Caregiver</span>
+</div>
+</div>
+</div>
+</header>
+<div class="flex min-h-screen max-w-container-max mx-auto">
+<!-- SideNavBar Shell -->
+<aside class="hidden md:flex flex-col w-64 bg-surface-container-low shadow-md shadow-surface-tint/5 sticky top-touch-target h-[calc(100vh-56px)] py-md">
+<nav class="flex-1 px-sm space-y-base">
+<!-- Dashboard Active -->
+<a class="flex items-center gap-md p-sm bg-primary-container text-on-primary-container rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label-lg text-label-lg">Dashboard</span>
+</a>
+<a class="flex items-center gap-md p-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">medical_services</span>
+<span class="font-label-lg text-label-lg">Medications</span>
+</a>
+<a class="flex items-center gap-md p-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">checklist</span>
+<span class="font-label-lg text-label-lg">Tasks</span>
+</a>
+<a class="flex items-center gap-md p-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">event</span>
+<span class="font-label-lg text-label-lg">Appointments</span>
+</a>
+<a class="flex items-center gap-md p-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-label-lg text-label-lg">Family Feed</span>
+</a>
+<a class="flex items-center gap-md p-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-lg text-label-lg">Documents</span>
+</a>
+</nav>
+<div class="px-sm mt-auto space-y-base">
+<button class="w-full flex items-center justify-center gap-sm p-sm bg-error-container text-on-error-container rounded-xl font-label-lg text-label-lg active:scale-95 transition-transform">
+<span class="material-symbols-outlined">emergency</span>
+<span>Emergency Help</span>
+</button>
+<div class="pt-md border-t border-outline-variant">
+<a class="flex items-center gap-md p-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-lg text-label-lg">Settings</span>
+</a>
+<a class="flex items-center gap-md p-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-lg text-label-lg">Support</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 p-md md:p-lg">
+<!-- Hero Header -->
+<section class="mb-xl">
+<h1 class="font-display text-display text-primary mb-xs">Good morning, Family.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Here is everything important for today.</p>
+</section>
+<!-- Bento Grid Dashboard -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-md items-start">
+<!-- Patient Summary Card (Wide-ish) -->
+<div class="lg:col-span-8 soft-card bg-white rounded-2xl p-md flex flex-col md:flex-row items-center gap-lg">
+<div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-primary-fixed">
+<img alt="Senior Portrait" class="w-full h-full object-cover" data-alt="A warm, close-up portrait of a serene elderly man with gentle eyes and a soft smile, sitting in a sunlit room. The lighting is soft and natural, emphasizing a peaceful and caring atmosphere. The overall aesthetic is clean, modern, and light-hearted, using a soft cream and sage green palette to evoke safety and comfort." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_6AJwTTNz_stzDTfpJrryifIxBbToEcoG6DZOOLZKejk4tUm6-1zYsTW-XJegyE-80nNbMqQpvghDYmISMg2ku6tw4Ba5c9R_9lfhf-hXQlWI7Rik0hRpwOJIaS5NlpCGpUiVae3ZZ1Bm-oIcD84T4bc3K-7YAGkON9gniyiydyVtjl_amsvy15wIQfy0s0jwxEETJF3cIF9WwQh7X57nv2TGk3ev-koWqw5TCr7jtsyI4QLy-n-Uew"/>
+</div>
+<div class="flex-1 space-y-base">
+<div class="flex items-center gap-md">
+<h2 class="font-headline-lg text-headline-lg text-primary">Dad's Status</h2>
+<span class="px-md py-xs bg-primary-fixed text-on-primary-fixed rounded-full font-label-sm text-label-sm flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">sentiment_satisfied</span>
+                                Mood: Happy
+                            </span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md pt-sm">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">history</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Last Medication</p>
+<p class="font-label-lg text-label-lg text-on-surface">8:00 AM</p>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">bedtime</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Sleep Quality</p>
+<p class="font-label-lg text-label-lg text-on-surface">7.5 Hours</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Family Activity Feed (Tall) -->
+<div class="lg:col-span-4 lg:row-span-3 soft-card bg-surface-container-low rounded-2xl p-md flex flex-col h-full">
+<div class="flex items-center justify-between mb-md">
+<h3 class="font-headline-md text-headline-md text-primary">Family Feed</h3>
+<span class="material-symbols-outlined text-secondary">forum</span>
+</div>
+<div class="space-y-md flex-1">
+<div class="flex gap-sm p-sm bg-white rounded-xl shadow-sm border border-outline-variant/20">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed font-bold">S</div>
+<div>
+<p class="font-label-lg text-label-lg leading-tight">Sister updated health log</p>
+<p class="font-label-sm text-label-sm text-secondary">10 mins ago</p>
+</div>
+</div>
+<div class="flex gap-sm p-sm opacity-70">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed font-bold">M</div>
+<div>
+<p class="font-label-lg text-label-lg leading-tight">Mom had lunch</p>
+<p class="font-label-sm text-label-sm text-secondary">2 hours ago</p>
+</div>
+</div>
+</div>
+<button class="mt-md w-full py-sm border border-primary rounded-xl font-label-lg text-label-lg text-primary hover:bg-primary-fixed transition-colors">
+                        View Full Feed
+                    </button>
+</div>
+<!-- Medications (Wide) -->
+<div class="lg:col-span-8 soft-card bg-white rounded-2xl p-md">
+<div class="flex items-center justify-between mb-md">
+<h3 class="font-headline-md text-headline-md text-primary">Today's Medications</h3>
+<button class="font-label-lg text-label-lg text-primary flex items-center gap-xs">
+<span class="material-symbols-outlined">add</span> Schedule
+                        </button>
+</div>
+<div class="space-y-md">
+<!-- Taken -->
+<div class="flex flex-col md:flex-row md:items-center justify-between p-md bg-surface-container-lowest rounded-2xl border-l-8 border-primary shadow-sm gap-md">
+<div class="flex items-center gap-md">
+<div class="w-14 h-14 bg-primary-fixed rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[32px]">pill</span>
+</div>
+<div>
+<h4 class="font-label-lg text-label-lg text-on-surface">Metformin</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">500mg • 8:00 AM</p>
+</div>
+</div>
+<span class="self-start md:self-center px-lg py-sm bg-primary-fixed text-on-primary-fixed-variant rounded-full font-label-lg text-label-lg flex items-center gap-sm">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                Taken
+                            </span>
+</div>
+<!-- Upcoming -->
+<div class="flex flex-col md:flex-row md:items-center justify-between p-md bg-surface-container-lowest rounded-2xl border-l-8 border-outline shadow-sm gap-md">
+<div class="flex items-center gap-md">
+<div class="w-14 h-14 bg-surface-container-high rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant text-[32px]">pill</span>
+</div>
+<div>
+<h4 class="font-label-lg text-label-lg text-on-surface">Aspirin</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">75mg • 8:00 PM</p>
+</div>
+</div>
+<span class="self-start md:self-center px-lg py-sm bg-surface-container-high text-on-surface-variant rounded-full font-label-lg text-label-lg flex items-center gap-sm">
+<span class="material-symbols-outlined text-[20px]">schedule</span>
+                                Upcoming
+                            </span>
+</div>
+</div>
+</div>
+<!-- Appointments & Tasks (Bottom Row) -->
+<div class="lg:col-span-4 soft-card bg-secondary-container/30 rounded-2xl p-md">
+<h3 class="font-headline-md text-headline-md text-primary mb-md">Appointments</h3>
+<div class="p-md bg-white rounded-xl flex items-start gap-md">
+<div class="w-12 h-12 bg-tertiary-container text-on-tertiary rounded-xl flex flex-col items-center justify-center flex-shrink-0">
+<span class="font-bold text-lg">2:00</span>
+<span class="text-[10px] uppercase">PM</span>
+</div>
+<div>
+<h4 class="font-label-lg text-label-lg text-on-surface">Dr. Sharma</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-base">Cardiologist • City Hospital</p>
+<button class="text-primary font-label-sm text-label-sm underline">Directions</button>
+</div>
+</div>
+</div>
+<div class="lg:col-span-4 soft-card bg-surface-container-highest rounded-2xl p-md">
+<h3 class="font-headline-md text-headline-md text-primary mb-md">Today's Tasks</h3>
+<div class="space-y-sm">
+<label class="flex items-center gap-md p-sm bg-white rounded-xl cursor-pointer hover:bg-surface-container transition-colors">
+<input class="w-6 h-6 rounded-lg text-primary focus:ring-primary border-outline" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Refill grocery</span>
+</label>
+<label class="flex items-center gap-md p-sm bg-white rounded-xl cursor-pointer hover:bg-surface-container transition-colors">
+<input class="w-6 h-6 rounded-lg text-primary focus:ring-primary border-outline" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Evening walk with Dad</span>
+</label>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Footer Shell -->
+<footer class="w-full py-xl bg-surface-container-highest mt-xl">
+<div class="max-w-container-max mx-auto px-md grid grid-cols-1 md:grid-cols-2 gap-md border-t border-outline-variant/30 pt-xl">
+<div>
+<h3 class="font-headline-md text-headline-md text-primary mb-base">CareCircle</h3>
+<p class="font-label-sm text-label-sm text-on-secondary-container max-w-sm">© 2024 CareCircle - The Digital Hearth. Built for Families navigating caregiving with love and support.</p>
+</div>
+<div class="flex flex-wrap gap-md md:justify-end items-center">
+<a class="font-label-sm text-label-sm text-on-secondary-container hover:text-primary hover:underline transition-all" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-secondary-container hover:text-primary hover:underline transition-all" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm text-on-secondary-container hover:text-primary hover:underline transition-all" href="#">Accessibility</a>
+<a class="font-label-sm text-label-sm text-on-secondary-container hover:text-primary hover:underline transition-all" href="#">Contact Us</a>
+</div>
+</div>
+</footer>
+<!-- Mobile Navigation (Bottom Nav) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-surface shadow-[0_-4px_10px_rgba(0,0,0,0.05)] flex justify-around items-center h-touch-target z-50 px-sm">
+<button class="flex flex-col items-center gap-xs text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="text-[10px] font-bold">Dashboard</span>
+</button>
+<button class="flex flex-col items-center gap-xs text-on-surface-variant opacity-60">
+<span class="material-symbols-outlined">medical_services</span>
+<span class="text-[10px]">Meds</span>
+</button>
+<div class="bg-primary-container p-sm rounded-full -mt-md shadow-lg">
+<span class="material-symbols-outlined text-on-primary-container">add</span>
+</div>
+<button class="flex flex-col items-center gap-xs text-on-surface-variant opacity-60">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-[10px]">Feed</span>
+</button>
+<button class="flex flex-col items-center gap-xs text-on-surface-variant opacity-60">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px]">Settings</span>
+</button>
+</nav>
+<script>
+        // Simple micro-interaction for task completion
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const text = this.nextElementSibling;
+                if(this.checked) {
+                    text.classList.add('line-through', 'opacity-50');
+                } else {
+                    text.classList.remove('line-through', 'opacity-50');
+                }
+            });
+        });
+    </script>
+</body></html>
