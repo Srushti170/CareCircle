@@ -39,7 +39,7 @@ export function MobileSidebar({
         onClick={(event) => event.stopPropagation()}
       >
         <div className="mb-4 flex items-center justify-between">
-          <BrandLogo imageClassName="h-11 w-11" textClassName="text-[1.45rem]" />
+          <BrandLogo imageClassName="h-[3.25rem] w-[3.25rem]" textClassName="text-[1.6rem]" />
           <button
             aria-label="Close navigation"
             className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white shadow-card"

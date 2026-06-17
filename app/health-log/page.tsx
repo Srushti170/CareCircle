@@ -68,16 +68,16 @@ export default function HealthLogPage() {
               }}
             >
               <Field label={t.health.painLevel}>
-                <Input max="10" min="1" onChange={(event) => setForm((current) => ({ ...current, painLevel: Number(event.target.value) }))} type="number" value={form.painLevel} />
+                <Input max="10" min="1" onChange={(event) => setForm((current) => ({ ...current, painLevel: Number(event.target.value) }))} placeholder={t.health.painPlaceholder} type="number" value={form.painLevel} />
               </Field>
               <Field label={t.health.sleepHours}>
-                <Input onChange={(event) => setForm((current) => ({ ...current, sleepHours: Number(event.target.value) }))} type="number" value={form.sleepHours} />
+                <Input onChange={(event) => setForm((current) => ({ ...current, sleepHours: Number(event.target.value) }))} placeholder={t.health.sleepPlaceholder} type="number" value={form.sleepHours} />
               </Field>
               <Field label={t.health.bloodPressure}>
-                <Input onChange={(event) => setForm((current) => ({ ...current, bloodPressure: event.target.value }))} value={form.bloodPressure} />
+                <Input onChange={(event) => setForm((current) => ({ ...current, bloodPressure: event.target.value }))} placeholder={t.health.bloodPressurePlaceholder} value={form.bloodPressure} />
               </Field>
               <Field label={t.health.sugarLevel}>
-                <Input onChange={(event) => setForm((current) => ({ ...current, sugarLevel: Number(event.target.value) }))} type="number" value={form.sugarLevel} />
+                <Input onChange={(event) => setForm((current) => ({ ...current, sugarLevel: Number(event.target.value) }))} placeholder={t.health.sugarPlaceholder} type="number" value={form.sugarLevel} />
               </Field>
               <div className="md:col-span-2">
                 <Field label={t.health.notes}>

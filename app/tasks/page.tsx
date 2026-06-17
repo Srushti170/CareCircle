@@ -47,10 +47,10 @@ export default function TasksPage() {
           }}
         >
           <Field label={t.tasks.task}>
-            <Input onChange={(event) => setForm((current) => ({ ...current, title: event.target.value }))} value={form.title} />
+            <Input onChange={(event) => setForm((current) => ({ ...current, title: event.target.value }))} placeholder={t.tasks.taskPlaceholder} value={form.title} />
           </Field>
           <Field label={t.tasks.assignedTo}>
-            <Input onChange={(event) => setForm((current) => ({ ...current, assignee: event.target.value }))} value={form.assignee} />
+            <Input onChange={(event) => setForm((current) => ({ ...current, assignee: event.target.value }))} placeholder={t.tasks.assigneePlaceholder} value={form.assignee} />
           </Field>
           <Field label={t.tasks.due}>
             <Input onChange={(event) => setForm((current) => ({ ...current, due: event.target.value }))} placeholder="Tomorrow or 6:30 PM" value={form.due} />

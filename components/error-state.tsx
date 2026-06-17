@@ -18,7 +18,7 @@ export function ErrorState({ title, message, actionLabel, onAction }: ErrorState
       <Card className="w-full max-w-[640px] p-8 text-center">
         <div className="mx-auto max-w-xl">
           <div className="flex justify-center">
-            <BrandLogo imageClassName="h-12 w-12" textClassName="text-[1rem] uppercase tracking-[0.12em] text-text-muted" />
+            <BrandLogo imageClassName="h-14 w-14" textClassName="text-[1.05rem] uppercase tracking-[0.12em] text-text-muted" />
           </div>
           <h1 className="mt-4 text-h1 font-bold text-primary">{title}</h1>
           <p className="mt-4 text-body text-text-muted">{message}</p>

@@ -128,10 +128,10 @@ export default function MedicationsPage() {
           }}
         >
           <Field label={t.medications.medicineName}>
-            <Input onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))} value={form.name} />
+            <Input onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))} placeholder={t.medications.medicineNamePlaceholder} value={form.name} />
           </Field>
           <Field label={t.medications.dose}>
-            <Input onChange={(event) => setForm((current) => ({ ...current, dose: event.target.value }))} value={form.dose} />
+            <Input onChange={(event) => setForm((current) => ({ ...current, dose: event.target.value }))} placeholder={t.medications.dosePlaceholder} value={form.dose} />
           </Field>
           <Field label={t.medications.time}>
             <Input onChange={(event) => setForm((current) => ({ ...current, time: event.target.value }))} placeholder="8:30 AM" value={form.time} />

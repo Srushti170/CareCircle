@@ -33,7 +33,7 @@ export default function ActivityPage() {
           }}
         >
           <Field label={t.activity.initial}>
-            <Input maxLength={1} onChange={(event) => setUser(event.target.value.toUpperCase() || "A")} value={user} />
+            <Input maxLength={1} onChange={(event) => setUser(event.target.value.toUpperCase() || "A")} placeholder={t.activity.initialPlaceholder} value={user} />
           </Field>
           <Field label={t.activity.update}>
             <Input onChange={(event) => setMessage(event.target.value)} placeholder={t.activity.updatePlaceholder} value={message} />

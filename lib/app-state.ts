@@ -118,6 +118,8 @@ export type VaultDocument = {
   type: "pdf" | "doc" | "image";
   category: DocumentCategory;
   summary: string;
+  fileDataUrl?: string;
+  mimeType?: string;
 };
 
 export type FamilyMember = {
@@ -321,40 +323,7 @@ export const initialState: CareCircleState = {
       notes: "Comfortable morning and good appetite."
     }
   ],
-  documents: [
-    {
-      id: "doc-1",
-      name: "Blood_Test_Oct.pdf",
-      date: "Uploaded Oct 12, 2024",
-      type: "pdf",
-      category: "Lab Reports",
-      summary: "Routine blood work"
-    },
-    {
-      id: "doc-2",
-      name: "Cardiology_Discharge.docx",
-      date: "Uploaded Sep 28, 2024",
-      type: "doc",
-      category: "Discharge Papers",
-      summary: "Discharge summary"
-    },
-    {
-      id: "doc-3",
-      name: "Insurance_Card.jpg",
-      date: "Uploaded Sep 08, 2024",
-      type: "image",
-      category: "Identity Docs",
-      summary: "Insurance ID card"
-    },
-    {
-      id: "doc-4",
-      name: "Prescription_Nov.pdf",
-      date: "Uploaded Nov 01, 2024",
-      type: "pdf",
-      category: "Prescriptions",
-      summary: "Monthly prescription"
-    }
-  ],
+  documents: [],
   familyMembers: [],
   settings: {
     textSize: "Large",

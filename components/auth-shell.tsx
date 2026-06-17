@@ -21,7 +21,7 @@ export function AuthShell({
   return (
     <main className="min-h-screen px-4 py-6 md:px-6 md:py-8">
       <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-4">
-        <BrandLogo imageClassName="h-12 w-12" priority />
+        <BrandLogo imageClassName="h-14 w-14" priority textClassName="text-[1.95rem]" />
         <LanguageSwitcher />
       </div>
 

@@ -64,7 +64,14 @@ type CareContextValue = {
   addFeedEntry: (payload: { user: string; title: string; badge?: FeedEntry["badge"]; kind?: FeedEntry["kind"] }) => void;
   reactToFeed: (id: string) => void;
   addHealthLog: (payload: Omit<HealthLog, "id">) => void;
-  addDocument: (payload: { name: string; category: DocumentCategory; summary: string; type: VaultDocument["type"] }) => void;
+  addDocument: (payload: {
+    name: string;
+    category: DocumentCategory;
+    summary: string;
+    type: VaultDocument["type"];
+    fileDataUrl?: string;
+    mimeType?: string;
+  }) => void;
   updateSetting: <K extends keyof CareCircleState["settings"]>(key: K, value: CareCircleState["settings"][K]) => void;
   updateCarePreference: (key: keyof CareCircleState["settings"]["carePreferences"]) => void;
   syncLocale: (locale: Locale) => void;
@@ -565,11 +572,11 @@ export function CareProvider({ children }: { children: React.ReactNode }) {
           ]
         }));
       },
-      addDocument: ({ name, category, summary, type }) => {
+      addDocument: ({ name, category, summary, type, fileDataUrl, mimeType }) => {
         const prettyDate = `${locale === "en" ? "Uploaded" : "अपलोड"} ${new Date().toLocaleDateString(locale === "en" ? "en-US" : "hi-IN", { month: "short", day: "numeric", year: "numeric" })}`;
         setState((current) => ({
           ...current,
-          documents: [{ id: createId("doc"), name, category, summary, type, date: prettyDate }, ...current.documents],
+          documents: [{ id: createId("doc"), name, category, summary, type, date: prettyDate, fileDataUrl, mimeType }, ...current.documents],
           feed: [
             {
               id: createId("feed"),

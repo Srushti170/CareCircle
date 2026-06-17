@@ -38,7 +38,7 @@ export function AppHeader({
     <header className="sticky top-0 z-40 border-b border-line/70 bg-[#fff8f1]/90 backdrop-blur-xl">
       <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-4 py-4 md:px-6">
         <div className="flex items-center gap-3">
-          <BrandLogo imageClassName="h-12 w-12" priority />
+          <BrandLogo imageClassName="h-14 w-14" priority textClassName="text-[1.9rem]" />
         </div>
 
         <div className="relative hidden min-w-[320px] flex-1 lg:block lg:max-w-[460px]">

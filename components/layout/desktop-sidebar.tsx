@@ -34,7 +34,7 @@ export function DesktopSidebar({
       )}
     >
       <div className={cn("mb-4 flex items-center", open ? "justify-between px-1" : "justify-center")}>
-        {open ? <BrandLogo imageClassName="h-10 w-10" textClassName="text-[1.15rem]" /> : <BrandLogo imageClassName="h-10 w-10" showText={false} />}
+        {open ? <BrandLogo imageClassName="h-12 w-12" textClassName="text-[1.3rem]" /> : <BrandLogo imageClassName="h-12 w-12" showText={false} />}
         <button
           aria-label={open ? "Collapse sidebar" : "Expand sidebar"}
           className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white shadow-card transition hover:bg-surface-muted"

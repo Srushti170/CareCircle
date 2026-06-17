@@ -37,16 +37,16 @@ export default function AppointmentsPage() {
           }}
         >
           <Field label={t.appointments.doctorName}>
-            <Input onChange={(event) => setForm((current) => ({ ...current, doctor: event.target.value }))} value={form.doctor} />
+            <Input onChange={(event) => setForm((current) => ({ ...current, doctor: event.target.value }))} placeholder={t.appointments.doctorPlaceholder} value={form.doctor} />
           </Field>
           <Field label={t.appointments.specialty}>
-            <Input onChange={(event) => setForm((current) => ({ ...current, specialty: event.target.value }))} value={form.specialty} />
+            <Input onChange={(event) => setForm((current) => ({ ...current, specialty: event.target.value }))} placeholder={t.appointments.specialtyPlaceholder} value={form.specialty} />
           </Field>
           <Field label={t.appointments.dateAndTime}>
             <Input onChange={(event) => setForm((current) => ({ ...current, time: event.target.value }))} placeholder="Jun 18, 2026 • 11:00 AM" value={form.time} />
           </Field>
           <Field label={t.appointments.location}>
-            <Input onChange={(event) => setForm((current) => ({ ...current, location: event.target.value }))} value={form.location} />
+            <Input onChange={(event) => setForm((current) => ({ ...current, location: event.target.value }))} placeholder={t.appointments.locationPlaceholder} value={form.location} />
           </Field>
           <div className="md:col-span-2">
             <Button icon="event_available" type="submit">
