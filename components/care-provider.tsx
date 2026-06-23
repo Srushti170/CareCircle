@@ -29,6 +29,30 @@ import {
 import type { Locale } from "@/lib/i18n";
 
 const STORAGE_KEY = "carecircle-state-v2";
+const SEEDED_DOCUMENT_NAMES = new Set([
+  "Cover Letter.pdf",
+  "Blood_Test_Oct.pdf",
+  "Cardiology_Discharge.docx",
+  "Insurance_Card.jpg",
+  "Prescription_Nov.pdf"
+]);
+
+function sanitizePersistedState(persisted: CareCircleState): CareCircleState {
+  const documents = persisted.documents.filter((item) => !SEEDED_DOCUMENT_NAMES.has(item.name));
+  const feed = persisted.feed.filter(
+    (item) => !(item.kind === "document" && item.title.startsWith("Uploaded "))
+  );
+
+  if (documents.length === persisted.documents.length && feed.length === persisted.feed.length) {
+    return persisted;
+  }
+
+  return {
+    ...persisted,
+    documents,
+    feed
+  };
+}
 
 type AuthResult = {
   ok: boolean;
@@ -58,7 +82,7 @@ type CareContextValue = {
   updateMedicationStatus: (id: string, status: MedicationStatus) => void;
   addTask: (payload: { title: string; assignee: string; due: string; tag: CareTask["tag"] }) => void;
   toggleTask: (id: string) => void;
-  addAppointment: (payload: { doctor: string; specialty: string; time: string; location: string }) => void;
+  addAppointment: (payload: { doctor: string; specialty: string; date: string; time: string; location: string }) => void;
   toggleAppointmentReminder: (id: string) => void;
   saveAppointmentNotes: (id: string, notes: string) => void;
   addFeedEntry: (payload: { user: string; title: string; badge?: FeedEntry["badge"]; kind?: FeedEntry["kind"] }) => void;
@@ -98,7 +122,7 @@ export function CareProvider({ children }: { children: React.ReactNode }) {
         if (response.ok) {
           const serverData = await response.json();
           if (serverData && serverData.auth) {
-            setState(serverData);
+            setState(sanitizePersistedState(serverData as CareCircleState));
             setHydrated(true);
             return;
           }
@@ -110,7 +134,7 @@ export function CareProvider({ children }: { children: React.ReactNode }) {
       try {
         const saved = window.localStorage.getItem(STORAGE_KEY);
         if (saved) {
-          setState(JSON.parse(saved) as CareCircleState);
+          setState(sanitizePersistedState(JSON.parse(saved) as CareCircleState));
         }
       } catch {}
       setHydrated(true);
@@ -475,10 +499,10 @@ export function CareProvider({ children }: { children: React.ReactNode }) {
             : current;
         });
       },
-      addAppointment: ({ doctor, specialty, time, location }) => {
+      addAppointment: ({ doctor, specialty, date, time, location }) => {
         setState((current) => ({
           ...current,
-          appointments: [{ id: createId("appt"), doctor, specialty, time, location, reminder: true, notes: "" }, ...current.appointments],
+          appointments: [{ id: createId("appt"), doctor, specialty, date, time, location, reminder: true, notes: "" }, ...current.appointments],
           feed: [
             {
               id: createId("feed"),

@@ -12,8 +12,17 @@ import { MobileSidebar } from "@/components/layout/mobile-sidebar";
 import { useLanguage } from "@/components/language-provider";
 import { navItems } from "@/lib/app-state";
 import { getNavLabel } from "@/lib/i18n";
+import { cn } from "@/lib/utils";
 
-export function AppShell({ children }: { children: React.ReactNode }) {
+export function AppShell({
+  children,
+  showFooter = true,
+  contentClassName
+}: {
+  children: React.ReactNode;
+  showFooter?: boolean;
+  contentClassName?: string;
+}) {
   const pathname = usePathname();
   const router = useRouter();
   const { t } = useLanguage();
@@ -76,7 +85,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         query={query}
       />
 
-      <div className="mx-auto flex max-w-[1400px] gap-6 px-4 py-6 md:px-6 lg:py-8">
+      <div className={cn("mx-auto flex max-w-[1400px] gap-6 px-4 py-6 md:px-6 lg:py-8", contentClassName)}>
         <DesktopSidebar
           onToggleEmergency={() => setShowEmergency((current) => !current)}
           onToggleSidebar={() => setSidebarOpen((current) => !current)}
@@ -87,7 +96,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
         <div className="min-w-0 flex-1 pb-24 lg:pb-0">
           {children}
-          <AppFooter />
+          {showFooter ? <AppFooter /> : null}
         </div>
       </div>
 

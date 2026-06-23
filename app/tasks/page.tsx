@@ -86,7 +86,7 @@ export default function TasksPage() {
                 <Icon name="more_vert" />
               </button>
             </div>
-            <h3 className="mt-6 text-h2 font-semibold leading-tight">{t.seed.tasks[task.id as keyof typeof t.seed.tasks]?.title ?? task.title}</h3>
+            <h3 className="mt-6 text-h2 font-semibold leading-tight">{task.title}</h3>
             <div className="mt-6 space-y-3 text-body text-text-muted">
               <div className="flex items-center gap-3">
                 <Icon className="text-[20px]" name="person" />
@@ -94,7 +94,7 @@ export default function TasksPage() {
               </div>
               <div className="flex items-center gap-3">
                 <Icon className="text-[20px]" name="calendar_today" />
-                <span>{t.tasks.due}: {t.seed.tasks[task.id as keyof typeof t.seed.tasks]?.due ?? task.due}</span>
+                <span>{t.tasks.due}: {task.due}</span>
               </div>
             </div>
             <Button

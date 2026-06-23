@@ -15,40 +15,25 @@ export default function LandingPage() {
 
   const featureCards = [
     {
-      title: locale === "hi" ? "à¤¸à¥à¤®à¤¾à¤°à¥à¤Ÿ à¤¦à¤µà¤¾à¤ˆ à¤°à¤¿à¤®à¤¾à¤‡à¤‚à¤¡à¤°" : locale === "mr" ? "à¤¸à¥à¤®à¤¾à¤°à¥à¤Ÿ à¤”à¤·à¤§ à¤¸à¥à¤®à¤°à¤£à¤ªà¤¤à¥à¤°à¥‡" : "Smart Medication Reminders",
-      body:
-        locale === "hi"
-          ? "à¤¦à¤µà¤¾ à¤›à¥‚à¤Ÿà¥‡ à¤¨à¤¹à¥€à¤‚à¥¤ à¤¦à¤µà¤¾ à¤²à¥€ à¤—à¤ˆ à¤¯à¤¾ à¤›à¥‚à¤Ÿà¥€, à¤‡à¤¸à¤•à¥€ à¤œà¤¾à¤¨à¤•à¤¾à¤°à¥€ à¤ªà¥‚à¤°à¥‡ à¤ªà¤°à¤¿à¤µà¤¾à¤° à¤•à¥‹ à¤®à¤¿à¤²à¥‡à¥¤"
-          : locale === "mr"
-            ? "à¤”à¤·à¤§ à¤šà¥à¤•à¥‚ à¤¨à¤¯à¥‡à¤¤. à¤”à¤·à¤§ à¤˜à¥‡à¤¤à¤²à¥‡ à¤•à¤¿à¤‚à¤µà¤¾ à¤šà¥à¤•à¤²à¥‡ à¤¯à¤¾à¤šà¥€ à¤®à¤¾à¤¹à¤¿à¤¤à¥€ à¤¸à¤‚à¤ªà¥‚à¤°à¥à¤£ à¤•à¥à¤Ÿà¥à¤‚à¤¬à¤¾à¤²à¤¾ à¤®à¤¿à¤³à¥‚ à¤¦à¥‡."
-            : "Never miss a dose again. Alerts for the whole family when medicine is taken or missed.",
+      title: t.landing.featureCards[0].title,
+      body: t.landing.featureCards[0].body,
       icon: "medical_services",
       accent: "bg-accent",
-      badge: locale === "hi" ? "à¤¹à¤²à¥à¤•à¤¾ à¤¸à¥à¤Ÿà¥‡à¤Ÿà¤¸: à¤ªà¥‚à¤°à¤¾" : locale === "mr" ? "à¤®à¤Š à¤¸à¥à¤¥à¤¿à¤¤à¥€: à¤ªà¥‚à¤°à¥à¤£" : "Pastel-Semantic: Done"
+      badge: t.landing.featureCards[0].badge
     },
     {
-      title: locale === "hi" ? "à¤ªà¤°à¤¿à¤µà¤¾à¤° à¤•à¥‡ à¤¸à¤¾à¤à¤¾ à¤•à¤¾à¤®" : locale === "mr" ? "à¤•à¥à¤Ÿà¥à¤‚à¤¬à¤¾à¤šà¥€ à¤¸à¤¾à¤®à¤¾à¤¯à¤¿à¤• à¤•à¤¾à¤®à¥‡" : "Shared Family Tasks",
-      body:
-        locale === "hi"
-          ? "à¤•à¤¿à¤°à¤¾à¤¨à¤¾, à¤¸à¤«à¤¾à¤ˆ à¤”à¤° à¤°à¥‹à¤œà¤¼ à¤•à¥€ à¤¦à¥‡à¤–à¤­à¤¾à¤² à¤•à¥‹ à¤¬à¤¿à¤¨à¤¾ à¤¬à¤¾à¤°-à¤¬à¤¾à¤° à¤®à¥ˆà¤¸à¥‡à¤œ à¤•à¤¿à¤ à¤®à¤¿à¤²à¤•à¤° à¤¸à¤‚à¤­à¤¾à¤²à¥‡à¤‚à¥¤"
-          : locale === "mr"
-            ? "à¤•à¤¿à¤°à¤¾à¤£à¤¾, à¤¸à¥à¤µà¤šà¥à¤›à¤¤à¤¾ à¤†à¤£à¤¿ à¤°à¥‹à¤œà¤šà¥€ à¤•à¤¾à¤³à¤œà¥€ à¤µà¤¾à¤°à¤‚à¤µà¤¾à¤° à¤®à¥‡à¤¸à¥‡à¤œ à¤¨ à¤•à¤°à¤¤à¤¾ à¤à¤•à¤¤à¥à¤° à¤¸à¤¾à¤‚à¤­à¤¾à¤³à¤¾."
-            : "Coordinate grocery runs, cleaning, and daily check-ins without back-and-forth texting.",
+      title: t.landing.featureCards[1].title,
+      body: t.landing.featureCards[1].body,
       icon: "checklist",
       accent: "bg-accent2",
       avatars: ["bg-[#b5d4bc]", "bg-[#d0c7bc]", "bg-[#b8d8ea]"]
     },
     {
-      title: locale === "hi" ? "à¤†à¤¸à¤¾à¤¨ à¤…à¤ªà¥‰à¤‡à¤‚à¤Ÿà¤®à¥‡à¤‚à¤Ÿ à¤Ÿà¥à¤°à¥ˆà¤•à¤¿à¤‚à¤—" : locale === "mr" ? "à¤¸à¥‹à¤ªà¥‡ à¤…à¤ªà¥‰à¤‡à¤‚à¤Ÿà¤®à¥‡à¤‚à¤Ÿ à¤Ÿà¥à¤°à¥…à¤•à¤¿à¤‚à¤—" : "Easy Appointment Tracking",
-      body:
-        locale === "hi"
-          ? "à¤¡à¥‰à¤•à¥à¤Ÿà¤° à¤µà¤¿à¤œà¤¼à¤¿à¤Ÿ, à¤¥à¥‡à¤°à¥‡à¤ªà¥€ à¤”à¤° à¤ªà¤°à¤¿à¤µà¤¾à¤° à¤•à¥€ à¤œà¤¼à¤°à¥‚à¤°à¥€ à¤®à¥à¤²à¤¾à¤•à¤¾à¤¤à¥‡à¤‚ à¤à¤• à¤¸à¤¾à¤à¤¾ à¤•à¥ˆà¤²à¥‡à¤‚à¤¡à¤° à¤®à¥‡à¤‚à¥¤"
-          : locale === "mr"
-            ? "à¤¡à¥‰à¤•à¥à¤Ÿà¤° à¤­à¥‡à¤Ÿà¥€, à¤¥à¥‡à¤°à¤ªà¥€ à¤†à¤£à¤¿ à¤•à¥à¤Ÿà¥à¤‚à¤¬à¤¾à¤šà¥à¤¯à¤¾ à¤®à¤¹à¤¤à¥à¤¤à¥à¤µà¤¾à¤šà¥à¤¯à¤¾ à¤­à¥‡à¤Ÿà¥€ à¤à¤•à¤¾à¤š à¤¸à¤¾à¤®à¤¾à¤¯à¤¿à¤• à¤•à¥…à¤²à¥‡à¤‚à¤¡à¤°à¤®à¤§à¥à¤¯à¥‡."
-            : "A shared calendar for doctor visits, therapy sessions, and family gatherings that everyone can see.",
+      title: t.landing.featureCards[2].title,
+      body: t.landing.featureCards[2].body,
       icon: "event",
       accent: "bg-primary-soft",
-      footer: locale === "hi" ? "à¤¸à¤­à¥€ à¤¡à¤¿à¤µà¤¾à¤‡à¤¸ à¤ªà¤° à¤¸à¤¿à¤‚à¤•" : locale === "mr" ? "à¤¸à¤°à¥à¤µ à¤‰à¤ªà¤•à¤°à¤£à¤¾à¤‚à¤µà¤° à¤¸à¤¿à¤‚à¤•" : "Synced across all devices"
+      footer: t.landing.featureCards[2].footer
     }
   ];
 
@@ -58,7 +43,9 @@ export default function LandingPage() {
         <div className="mx-auto flex max-w-[1320px] items-center justify-between gap-4 px-4 py-4 md:px-6">
           <BrandLogo imageClassName="h-14 w-14" priority textClassName="text-[1.95rem]" />
           <nav className="hidden items-center gap-8 text-label font-medium md:flex">
-            <a className="border-b border-primary pb-1" href="#home">{t.landing.home}</a>
+            <a className="border-b border-primary pb-1" href="#home">
+              {t.landing.home}
+            </a>
             <a href="#features">{t.landing.features}</a>
             <a href="#story">{t.landing.ourStory}</a>
           </nav>
@@ -68,8 +55,12 @@ export default function LandingPage() {
 
       <section className="mx-auto grid max-w-[1320px] gap-10 px-4 py-10 md:px-6 lg:grid-cols-[1.02fr_0.98fr] lg:items-center lg:py-14" id="home">
         <div className={locale === "en" ? "" : "lang-devanagari"}>
-          <div className="mb-5 inline-flex rounded-full bg-accent px-4 py-2 text-sm font-semibold text-primary shadow-card">{t.landing.brandLine}</div>
-          <h1 className="max-w-[12ch] text-hero font-bold tracking-[-0.04em] text-foreground md:text-display">{t.landing.heroTitle}</h1>
+          <div className="mb-5 inline-flex rounded-full bg-accent px-4 py-2 text-sm font-semibold text-primary shadow-card">
+            {t.landing.brandLine}
+          </div>
+          <h1 className="max-w-[12ch] text-hero font-bold tracking-[-0.04em] text-foreground md:text-display">
+            {t.landing.heroTitle}
+          </h1>
           <p className="mt-5 max-w-xl text-body text-text-muted">{t.landing.heroBody}</p>
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
             <Link href="/signup">
@@ -99,7 +90,9 @@ export default function LandingPage() {
       <section className="bg-[#f7efe6] py-16" id="features">
         <div className="mx-auto max-w-[1320px] px-4 md:px-6">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className={locale === "en" ? "text-h2 font-bold text-primary" : "lang-devanagari text-h2 font-bold text-primary"}>{t.landing.featuresTitle}</h2>
+            <h2 className={locale === "en" ? "text-h2 font-bold text-primary" : "lang-devanagari text-h2 font-bold text-primary"}>
+              {t.landing.featuresTitle}
+            </h2>
             <p className="mt-4 text-body text-text-muted">{t.landing.featuresBody}</p>
           </div>
 
@@ -120,7 +113,12 @@ export default function LandingPage() {
                       ))}
                     </div>
                   ) : null}
-                  {card.footer ? <div className="flex items-center gap-2 text-sm text-text-muted"><Icon className="text-[18px]" name="sync" />{card.footer}</div> : null}
+                  {card.footer ? (
+                    <div className="flex items-center gap-2 text-sm text-text-muted">
+                      <Icon className="text-[18px]" name="sync" />
+                      {card.footer}
+                    </div>
+                  ) : null}
                 </div>
               </Card>
             ))}
@@ -156,11 +154,15 @@ export default function LandingPage() {
       <section className="mx-auto max-w-[1320px] px-4 py-8 md:px-6">
         <div className="mx-auto max-w-3xl rounded-[30px] border border-line bg-[#f3ece4] px-7 py-9 text-center shadow-card">
           <Icon className="text-[2.1rem] text-primary" name="translate" />
-          <h3 className={locale === "en" ? "mt-3 text-h3 font-semibold text-primary" : "lang-devanagari mt-3 text-h3 font-semibold text-primary"}>{t.landing.careInYourLanguage}</h3>
+          <h3 className={locale === "en" ? "mt-3 text-h3 font-semibold text-primary" : "lang-devanagari mt-3 text-h3 font-semibold text-primary"}>
+            {t.landing.careInYourLanguage}
+          </h3>
           <p className="mx-auto mt-3 max-w-2xl text-body text-text-muted">{t.landing.careInYourLanguageBody}</p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             {t.landing.languageCards.map((item) => (
-              <div className="rounded-xl border border-[#bfd6cb] bg-white px-4 py-2.5 text-sm font-medium" key={item}>{item}</div>
+              <div className="rounded-xl border border-[#bfd6cb] bg-white px-4 py-2.5 text-sm font-medium" key={item}>
+                {item}
+              </div>
             ))}
           </div>
         </div>

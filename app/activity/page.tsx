@@ -62,7 +62,7 @@ export default function ActivityPage() {
 
           {state.feed.map((item) => (
             <div className="relative flex gap-4 pl-2" key={item.id}>
-              <div className="w-16 pt-6 text-right text-sm text-text-muted">{t.seed.feed[item.id as keyof typeof t.seed.feed]?.time ?? item.time}</div>
+              <div className="w-16 pt-6 text-right text-sm text-text-muted">{item.time}</div>
               <div className="z-10 mt-7 h-4 w-4 rounded-full border-2 border-primary bg-white" />
               <Card className="flex-1 p-6">
                 <div className="flex flex-col gap-4 md:flex-row">
@@ -70,7 +70,7 @@ export default function ActivityPage() {
                     <Icon name={item.icon} />
                   </div>
                   <div className="flex-1">
-                    <div className="text-h3 font-medium">{t.seed.feed[item.id as keyof typeof t.seed.feed]?.title ?? item.title}</div>
+                    <div className="text-h3 font-medium">{item.title}</div>
                     <div className="mt-3 inline-flex rounded-full bg-surface-muted px-3 py-1 text-sm font-bold text-text-muted">{t.values.badges[item.badge as keyof typeof t.values.badges] ?? item.badge}</div>
                     <div className="mt-5 flex flex-wrap gap-3">
                       <button className="rounded-full bg-surface-muted px-4 py-3 text-base text-text-muted" onClick={() => reactToFeed(item.id)} type="button">

@@ -166,28 +166,21 @@ export default function MedicationsPage() {
               {group.title}
             </h2>
             <div className="space-y-5">
-              {group.items.map((item) => {
-                const seedMedication = t.seed.medications[item.id as keyof typeof t.seed.medications];
-                const localizedNote = seedMedication && "note" in seedMedication ? seedMedication.note : item.note;
-
-                return (
-                  <MedCard
-                    item={{
-                      ...item,
-                      dose: seedMedication?.dose ?? item.dose,
-                      note: localizedNote,
-                      status: t.values.statuses[item.status as keyof typeof t.values.statuses] ?? item.status
-                    }}
-                    key={item.id}
-                    labels={{
-                      markAsTaken: t.medications.markAsTaken,
-                      skip: t.medications.skip,
-                      missed: t.medications.missed
-                    }}
-                    onStatus={updateMedicationStatus}
-                  />
-                );
-              })}
+              {group.items.map((item) => (
+                <MedCard
+                  item={{
+                    ...item,
+                    status: t.values.statuses[item.status as keyof typeof t.values.statuses] ?? item.status
+                  }}
+                  key={item.id}
+                  labels={{
+                    markAsTaken: t.medications.markAsTaken,
+                    skip: t.medications.skip,
+                    missed: t.medications.missed
+                  }}
+                  onStatus={updateMedicationStatus}
+                />
+              ))}
               {group.items.length === 0 ? (
                 <EmptyState
                   icon={group.icon}
