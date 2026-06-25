@@ -10,7 +10,7 @@ import { useLanguage } from "@/components/language-provider";
 import { Button, Card, Field, Input, PageHeader } from "@/components/ui";
 
 export default function ActivityPage() {
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
   const { state, addFeedEntry, reactToFeed } = useCare();
   const [user, setUser] = useState("A");
   const [message, setMessage] = useState("");
@@ -36,7 +36,17 @@ export default function ActivityPage() {
             <Input maxLength={1} onChange={(event) => setUser(event.target.value.toUpperCase() || "A")} placeholder={t.activity.initialPlaceholder} value={user} />
           </Field>
           <Field label={t.activity.update}>
-            <Input onChange={(event) => setMessage(event.target.value)} placeholder={t.activity.updatePlaceholder} value={message} />
+            <Input
+              onChange={(event) => setMessage(event.target.value)}
+              placeholder={
+                state.patient.name ? (
+                  locale === "hi" ? `${state.patient.name} ने खाना खा लिया है और अब बेहतर महसूस कर रहे हैं।` :
+                  locale === "mr" ? `${state.patient.name}ंनी जेवण केले आणि आता त्यांना बरं वाटत आहे.` :
+                  `${state.patient.name} had lunch and is feeling better.`
+                ) : t.activity.updatePlaceholder
+              }
+              value={message}
+            />
           </Field>
           <div className="flex items-end">
             <Button className="w-full" icon="send" type="submit">
@@ -50,7 +60,13 @@ export default function ActivityPage() {
         <EmptyState
           icon="groups"
           title={t.activity.title}
-          description="No updates in the family feed yet. Share how Dad is doing or post an update above!"
+          description={
+            state.patient.name ? (
+              locale === "hi" ? `परिवार फ़ीड में अभी तक कोई अपडेट नहीं है। शेयर करें कि ${state.patient.name} कैसे हैं या ऊपर एक अपडेट पोस्ट करें!` :
+              locale === "mr" ? `कुटुंब फीडमध्ये अद्याप कोणतेही अपडेट नाहीत. ${state.patient.name} कसे आहेत ते शेअर करा किंवा वर एक अपडेट पोस्ट करा!` :
+              `No updates in the family feed yet. Share how ${state.patient.name} is doing or post an update above!`
+            ) : "No updates in the family feed yet. Share how Dad is doing or post an update above!"
+          }
         />
       ) : (
         <div className="relative space-y-8 before:absolute before:bottom-0 before:left-[28px] before:top-[68px] before:w-[2px] before:bg-[repeating-linear-gradient(to_bottom,transparent,transparent_10px,#d6cec5_10px,#d6cec5_18px)]">

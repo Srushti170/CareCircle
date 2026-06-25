@@ -71,8 +71,8 @@ function MedCard({
 }
 
 export default function MedicationsPage() {
-  const { t } = useLanguage();
-  const { state, addMedication, updateMedicationStatus } = useCare();
+  const { t, locale } = useLanguage();
+  const { state, addMedication, updateMedicationStatus, currentUser } = useCare();
   const [form, setForm] = useState({
     name: "",
     dose: "",
@@ -110,48 +110,56 @@ export default function MedicationsPage() {
             <div className="mt-2 text-h3 font-semibold text-primary">{state.patient.fullName}</div>
           </div>
         }
-        subtitle={t.medications.subtitle}
+        subtitle={
+          state.patient.fullName || state.patient.name ? (
+            locale === "hi" ? `${state.patient.fullName || state.patient.name} की रोज़ की दवा सूची` :
+            locale === "mr" ? `${state.patient.fullName || state.patient.name}साठी रोजची औषध यादी` :
+            `Daily schedule for ${state.patient.fullName || state.patient.name}`
+          ) : t.medications.subtitle
+        }
         title={t.medications.title}
       />
 
-      <Card className="mb-8 p-6">
-        <h2 className="text-h2 font-semibold text-primary">{t.medications.addNewMedication}</h2>
-        <form
-          className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-5"
-          onSubmit={(event) => {
-            event.preventDefault();
-            if (!form.name || !form.dose || !form.time) {
-              return;
-            }
-            addMedication(form);
-            setForm({ name: "", dose: "", time: "", period: "Morning" });
-          }}
-        >
-          <Field label={t.medications.medicineName}>
-            <Input onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))} placeholder={t.medications.medicineNamePlaceholder} value={form.name} />
-          </Field>
-          <Field label={t.medications.dose}>
-            <Input onChange={(event) => setForm((current) => ({ ...current, dose: event.target.value }))} placeholder={t.medications.dosePlaceholder} value={form.dose} />
-          </Field>
-          <Field label={t.medications.time}>
-            <Input onChange={(event) => setForm((current) => ({ ...current, time: event.target.value }))} placeholder="8:30 AM" value={form.time} />
-          </Field>
-          <Field label={t.medications.period}>
-            <Select onChange={(event) => setForm((current) => ({ ...current, period: event.target.value as MedicationPeriod }))} value={form.period}>
-              {(["Morning", "Afternoon", "Evening", "Night"] as MedicationPeriod[]).map((period) => (
-                <option key={period} value={period}>
-                  {periodLabels[period]}
-                </option>
-              ))}
-            </Select>
-          </Field>
-          <div className="flex items-end">
-            <Button className="w-full" icon="add" type="submit">
-              {t.medications.addMedication}
-            </Button>
-          </div>
-        </form>
-      </Card>
+      {currentUser?.role !== "Patient" ? (
+        <Card className="mb-8 p-6">
+          <h2 className="text-h2 font-semibold text-primary">{t.medications.addNewMedication}</h2>
+          <form
+            className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-5"
+            onSubmit={(event) => {
+              event.preventDefault();
+              if (!form.name || !form.dose || !form.time) {
+                return;
+              }
+              addMedication(form);
+              setForm({ name: "", dose: "", time: "", period: "Morning" });
+            }}
+          >
+            <Field label={t.medications.medicineName}>
+              <Input onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))} placeholder={t.medications.medicineNamePlaceholder} value={form.name} />
+            </Field>
+            <Field label={t.medications.dose}>
+              <Input onChange={(event) => setForm((current) => ({ ...current, dose: event.target.value }))} placeholder={t.medications.dosePlaceholder} value={form.dose} />
+            </Field>
+            <Field label={t.medications.time}>
+              <Input onChange={(event) => setForm((current) => ({ ...current, time: event.target.value }))} placeholder="8:30 AM" value={form.time} />
+            </Field>
+            <Field label={t.medications.period}>
+              <Select onChange={(event) => setForm((current) => ({ ...current, period: event.target.value as MedicationPeriod }))} value={form.period}>
+                {(["Morning", "Afternoon", "Evening", "Night"] as MedicationPeriod[]).map((period) => (
+                  <option key={period} value={period}>
+                    {periodLabels[period]}
+                  </option>
+                ))}
+              </Select>
+            </Field>
+            <div className="flex items-end">
+              <Button className="w-full" icon="add" type="submit">
+                {t.medications.addMedication}
+              </Button>
+            </div>
+          </form>
+        </Card>
+      ) : null}
 
       <div className="grid gap-8 xl:grid-cols-2">
         {[
@@ -193,25 +201,33 @@ export default function MedicationsPage() {
         ))}
       </div>
 
-      <Card className="mt-8 p-7">
-        <div className="grid gap-6 lg:grid-cols-[220px_1fr_auto] lg:items-center">
-          <div className="mx-auto flex h-[160px] w-[160px] items-center justify-center rounded-full border-[10px] border-primary border-l-surface-muted text-center">
-            <div>
-              <div className="text-[3rem] font-bold leading-none">{adherence}%</div>
-              <div className="mt-1 text-label text-text-muted">{t.medications.daily}</div>
+      {state.medications.length > 0 ? (
+        <Card className="mt-8 p-7">
+          <div className="grid gap-6 lg:grid-cols-[220px_1fr_auto] lg:items-center">
+            <div className="mx-auto flex h-[160px] w-[160px] items-center justify-center rounded-full border-[10px] border-primary border-l-surface-muted text-center">
+              <div>
+                <div className="text-[3rem] font-bold leading-none">{adherence}%</div>
+                <div className="mt-1 text-label text-text-muted">{t.medications.daily}</div>
+              </div>
             </div>
+            <div>
+              <h3 className="text-h2 font-semibold text-primary">
+                {state.patient.name ? (
+                  locale === "hi" ? `बहुत अच्छा, ${state.patient.name}!` :
+                  locale === "mr" ? `छान काम, ${state.patient.name}!` :
+                  `Great job, ${state.patient.name}!`
+                ) : t.medications.greatJob}
+              </h3>
+              <p className="mt-3 max-w-xl text-body text-text-muted">
+                {state.medications.filter((item) => item.status === "Taken").length} / {state.medications.length} {t.medications.adherenceLine}
+              </p>
+            </div>
+            <Button className="w-full lg:w-auto" variant="secondary">
+              {t.medications.detailedLog}
+            </Button>
           </div>
-          <div>
-            <h3 className="text-h2 font-semibold text-primary">{t.medications.greatJob}</h3>
-            <p className="mt-3 max-w-xl text-body text-text-muted">
-              {state.medications.filter((item) => item.status === "Taken").length} / {state.medications.length} {t.medications.adherenceLine}
-            </p>
-          </div>
-          <Button className="w-full lg:w-auto" variant="secondary">
-            {t.medications.detailedLog}
-          </Button>
-        </div>
-      </Card>
+        </Card>
+      ) : null}
     </AppShell>
   );
 }

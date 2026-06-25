@@ -34,7 +34,7 @@ export default function DashboardPage() {
               <div className="flex-1">
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                   <h2 className="text-[2.1rem] font-bold leading-[1.02] tracking-[-0.03em] text-primary md:text-[2.35rem]">
-                    {t.dashboard.patientStatus}
+                    {state.patient.name ? (locale === "hi" ? `${state.patient.name} की स्थिति` : locale === "mr" ? `${state.patient.name} यांची स्थिती` : `${state.patient.name}'s Status`) : t.dashboard.patientStatus}
                   </h2>
                   <StatusPill tone={state.patient.mood === "Unwell" ? "danger" : state.patient.mood === "Tired" ? "warning" : "success"}>
                     <span className="flex items-center gap-2">

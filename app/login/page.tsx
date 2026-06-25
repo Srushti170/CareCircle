@@ -14,7 +14,7 @@ export default function LoginPage() {
   const router = useRouter();
   const { locale } = useLanguage();
   const copy = getAuthCopy(locale);
-  const { hydrated, isAuthenticated, state, login } = useCare();
+  const { hydrated, isAuthenticated, state, login, currentUser } = useCare();
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
 
@@ -22,8 +22,9 @@ export default function LoginPage() {
     if (!hydrated || !isAuthenticated) {
       return;
     }
-    router.replace(state.onboarding.completed ? "/dashboard" : "/onboarding");
-  }, [hydrated, isAuthenticated, router, state.onboarding.completed]);
+    const isCaregiver = currentUser?.role === "Primary Caregiver";
+    router.replace(isCaregiver && !state.onboarding.completed ? "/onboarding" : "/dashboard");
+  }, [hydrated, isAuthenticated, router, state.onboarding.completed, currentUser]);
 
   return (
     <AuthShell badge={copy.eyebrow} body={copy.loginBody} title={copy.loginTitle}>
@@ -41,7 +42,9 @@ export default function LoginPage() {
               return;
             }
             setError("");
-            router.replace(state.onboarding.completed ? "/dashboard" : "/onboarding");
+            const targetUser = state.auth.users.find((item) => item.email.toLowerCase() === form.email.trim().toLowerCase());
+            const isCaregiver = targetUser?.role === "Primary Caregiver";
+            router.replace(isCaregiver && !state.onboarding.completed ? "/onboarding" : "/dashboard");
           }}
         >
           <Field label={copy.email}>

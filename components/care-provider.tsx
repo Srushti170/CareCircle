@@ -68,7 +68,7 @@ type CareContextValue = {
   login: (payload: { email: string; password: string }) => AuthResult;
   logout: () => void;
   signupPrimaryCaregiver: (payload: { name: string; email: string; password: string }) => AuthResult;
-  signupFromInvite: (payload: { code: string; name: string; password: string }) => AuthResult;
+  signupFromInvite: (payload: { code: string; name: string; password: string; email?: string; role?: CareRole }) => AuthResult;
   createCareCircle: (payload: { name: string }) => AuthResult;
   updatePatientProfile: (payload: Pick<PatientProfile, "name" | "fullName" | "age" | "relation" | "careNeeds">) => void;
   inviteMember: (payload: { name: string; email: string; role: Exclude<CareRole, "Primary Caregiver"> }) => AuthResult;
@@ -162,6 +162,7 @@ export function CareProvider({ children }: { children: React.ReactNode }) {
 
   const value = useMemo<CareContextValue>(() => {
     const currentUser = state.auth.users.find((user) => user.id === state.auth.currentUserId) ?? null;
+    const userInitials = currentUser?.name ? currentUser.name.charAt(0).toUpperCase() : "U";
 
     const periodLabel = (period: MedicationPeriod) => {
       switch (period) {
@@ -210,9 +211,6 @@ export function CareProvider({ children }: { children: React.ReactNode }) {
         }));
       },
       signupPrimaryCaregiver: ({ name, email, password }) => {
-        if (state.auth.users.some((user) => user.role === "Primary Caregiver")) {
-          return { ok: false, message: "A primary caregiver account already exists for this Care Circle." };
-        }
         if (emailTaken(email)) {
           return { ok: false, message: "That email is already in use." };
         }
@@ -230,29 +228,57 @@ export function CareProvider({ children }: { children: React.ReactNode }) {
             currentUserId: user.id,
             users: [user, ...current.auth.users]
           },
-          familyMembers: [{ id: createId("fm"), name, email: user.email, role: "Primary Caregiver" }, ...current.familyMembers],
+          careCircle: null,
+          invites: [],
           onboarding: {
             completed: false,
             step: "circle"
-          }
+          },
+          patient: {
+            name: "",
+            fullName: "",
+            age: "",
+            relation: "",
+            careNeeds: "",
+            mood: "Neutral",
+            sleepHours: 0,
+            bloodPressure: "",
+            sugarLevel: 0,
+            painLevel: 0,
+            lastMedication: ""
+          },
+          medications: [],
+          tasks: [],
+          appointments: [],
+          feed: [],
+          healthLogs: [],
+          documents: [],
+          familyMembers: [{ id: createId("fm"), name, email: user.email, role: "Primary Caregiver" }]
         }));
         return { ok: true };
       },
-      signupFromInvite: ({ code, name, password }) => {
+      signupFromInvite: ({ code, name, password, email, role }) => {
         const invite = state.invites.find((item) => item.code === code.toUpperCase() && item.status === "pending");
-        if (!invite) {
+        const isGeneral = state.careCircle?.inviteCode === code.toUpperCase();
+        if (!invite && !isGeneral) {
           return { ok: false, message: "This invite link is not valid anymore." };
         }
-        if (emailTaken(invite.email)) {
+        const targetEmail = invite ? invite.email : email?.trim().toLowerCase();
+        const targetRole = invite ? invite.role : (role || "Family Member");
+        const circleId = invite ? invite.circleId : state.careCircle?.id;
+        if (!targetEmail) {
+          return { ok: false, message: "Email is required." };
+        }
+        if (emailTaken(targetEmail)) {
           return { ok: false, message: "This invited email already has an account." };
         }
         const user: UserAccount = {
           id: createId("user"),
           name,
-          email: invite.email,
+          email: targetEmail,
           password,
-          role: invite.role,
-          circleId: invite.circleId
+          role: targetRole,
+          circleId: circleId || null
         };
         setState((current) => ({
           ...current,
@@ -260,10 +286,12 @@ export function CareProvider({ children }: { children: React.ReactNode }) {
             currentUserId: user.id,
             users: [user, ...current.auth.users]
           },
-          invites: current.invites.map((item) => (item.id === invite.id ? { ...item, status: "accepted" } : item)),
-          familyMembers: current.familyMembers.some((member) => member.email === invite.email)
+          invites: invite
+            ? current.invites.map((item) => (item.id === invite.id ? { ...item, status: "accepted" } : item))
+            : current.invites,
+          familyMembers: current.familyMembers.some((member) => member.email === targetEmail)
             ? current.familyMembers
-            : [{ id: createId("fm"), name, email: invite.email, role: invite.role }, ...current.familyMembers]
+            : [{ id: createId("fm"), name, email: targetEmail, role: targetRole }, ...current.familyMembers]
         }));
         return { ok: true };
       },
@@ -370,7 +398,7 @@ export function CareProvider({ children }: { children: React.ReactNode }) {
           feed: [
             {
               id: createId("feed"),
-              user: "A",
+              user: userInitials,
               title:
                 locale === "hi"
                   ? `${name} को ${periodLabel(period)} की दवाओं में जोड़ा गया`
@@ -398,10 +426,10 @@ export function CareProvider({ children }: { children: React.ReactNode }) {
                   note:
                     status === "Taken"
                       ? locale === "hi"
-                        ? `${formatRelative()} पर दर्ज किया गया`
+                        ? `${formatRelative()} पर ${currentUser?.name || "परिवार"} द्वारा दर्ज किया गया`
                         : locale === "mr"
-                          ? `${formatRelative()} ला नोंदवले`
-                          : `Logged at ${formatRelative()}`
+                          ? `${formatRelative()} ला ${currentUser?.name || "कुटुंब"} द्वारे नोंदवले`
+                          : `Logged by ${currentUser?.name || "Family"} at ${formatRelative()}`
                       : item.note
                 }
               : item
@@ -418,7 +446,7 @@ export function CareProvider({ children }: { children: React.ReactNode }) {
                 feed: [
                   {
                     id: createId("feed"),
-                    user: "R",
+                    user: userInitials,
                     title:
                       locale === "hi"
                         ? `${changed.name} को ${t.values.statuses[status].toLowerCase()} के रूप में चिन्हित किया गया`
@@ -445,7 +473,7 @@ export function CareProvider({ children }: { children: React.ReactNode }) {
           feed: [
             {
               id: createId("feed"),
-              user: assignee.charAt(0).toUpperCase(),
+              user: userInitials,
               title:
                 locale === "hi"
                   ? `${assignee} को "${title}" काम दिया गया`
@@ -506,7 +534,7 @@ export function CareProvider({ children }: { children: React.ReactNode }) {
           feed: [
             {
               id: createId("feed"),
-              user: "A",
+              user: userInitials,
               title:
                 locale === "hi"
                   ? `${doctor} की मुलाकात तय की गई`
@@ -578,7 +606,7 @@ export function CareProvider({ children }: { children: React.ReactNode }) {
           feed: [
             {
               id: createId("feed"),
-              user: "P",
+              user: userInitials,
               title:
                 locale === "hi"
                   ? `स्वास्थ्य जांच ${t.values.moods[payload.mood as keyof typeof t.values.moods]} मूड के साथ दर्ज की गई`
@@ -604,7 +632,7 @@ export function CareProvider({ children }: { children: React.ReactNode }) {
           feed: [
             {
               id: createId("feed"),
-              user: "A",
+              user: userInitials,
               title:
                 locale === "hi"
                   ? `${name} अपलोड की गई`

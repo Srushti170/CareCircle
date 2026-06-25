@@ -31,7 +31,7 @@ export function AppHeader({
   onMobileMenuOpen
 }: AppHeaderProps) {
   const { locale, t } = useLanguage();
-  const { logout } = useCare();
+  const { logout, currentUser } = useCare();
   const authCopyText = getAuthCopy(locale);
 
   return (
@@ -65,7 +65,7 @@ export function AppHeader({
           </div>
           <div className="hidden rounded-full border border-line bg-white/85 px-4 py-2.5 text-sm font-semibold text-foreground shadow-card md:flex md:items-center md:gap-2">
             <Icon className="text-primary" name="account_circle" />
-            <span>{t.common.primaryCaregiver}</span>
+            <span>{currentUser ? `${currentUser.name} (${authCopyText.roles[currentUser.role]})` : t.common.primaryCaregiver}</span>
           </div>
           <button
             className="hidden items-center gap-2 rounded-full border border-line bg-white/90 px-4 py-2.5 text-sm font-semibold text-danger shadow-card transition hover:bg-danger-bg md:inline-flex"

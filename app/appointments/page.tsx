@@ -71,7 +71,7 @@ function getAppointmentLabel(appointment: { specialty: string; doctor: string })
 
 export default function AppointmentsPage() {
   const { locale, t } = useLanguage();
-  const { state, addAppointment, saveAppointmentNotes, toggleAppointmentReminder } = useCare();
+  const { state, addAppointment, saveAppointmentNotes, toggleAppointmentReminder, currentUser } = useCare();
 
   const localeCode = locale === "en" ? "en-US" : locale === "hi" ? "hi-IN" : "mr-IN";
   const timeLabel = locale === "hi" ? "समय" : locale === "mr" ? "वेळ" : "Time";
@@ -182,9 +182,11 @@ export default function AppointmentsPage() {
           <p className="mt-1.5 max-w-xl text-body text-text-muted">{t.appointments.subtitle}</p>
         </div>
 
-        <Button className="min-h-11 self-start px-4 text-sm" icon="event_available" onClick={() => openDate(selectedDate, true)}>
-          {t.appointments.scheduleAppointment}
-        </Button>
+        {currentUser?.role !== "Patient" ? (
+          <Button className="min-h-11 self-start px-4 text-sm" icon="event_available" onClick={() => openDate(selectedDate, true)}>
+            {t.appointments.scheduleAppointment}
+          </Button>
+        ) : null}
       </div>
 
       <Card className="overflow-hidden p-0">
@@ -384,104 +386,106 @@ export default function AppointmentsPage() {
                     </div>
                   )}
 
-                  <div className="rounded-[24px] border border-line bg-[#f8f4ee] p-4 md:p-5">
-                    <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                      <div>
-                        <h3 className="text-h3 font-semibold text-primary">{t.appointments.scheduleAppointment}</h3>
-                        <p className="mt-1 text-body text-text-muted">
-                          {t.appointments.scheduleForDate}: {selectedDateLabel}
-                        </p>
+                  {currentUser?.role !== "Patient" ? (
+                    <div className="rounded-[24px] border border-line bg-[#f8f4ee] p-4 md:p-5">
+                      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                        <div>
+                          <h3 className="text-h3 font-semibold text-primary">{t.appointments.scheduleAppointment}</h3>
+                          <p className="mt-1 text-body text-text-muted">
+                            {t.appointments.scheduleForDate}: {selectedDateLabel}
+                          </p>
+                        </div>
+
+                        {!isComposerOpen ? (
+                          <Button icon="add_circle" onClick={() => setIsComposerOpen(true)}>
+                            {t.appointments.scheduleForDate}
+                          </Button>
+                        ) : null}
                       </div>
 
-                      {!isComposerOpen ? (
-                        <Button icon="add_circle" onClick={() => setIsComposerOpen(true)}>
-                          {t.appointments.scheduleForDate}
-                        </Button>
-                      ) : null}
+                      {isComposerOpen ? (
+                        <form
+                          className="mt-5 grid gap-4 md:grid-cols-2"
+                          onSubmit={(event) => {
+                            event.preventDefault();
+                            if (!form.doctor || !form.specialty || !form.date || !form.time || !form.location) {
+                              return;
+                            }
+
+                            addAppointment(form);
+                            setSelectedDate(form.date);
+                            setVisibleMonth(monthStart(new Date(`${form.date}T12:00:00`)));
+                            setForm({
+                              doctor: "",
+                              specialty: "",
+                              date: form.date,
+                              time: "",
+                              location: ""
+                            });
+                            setIsComposerOpen(false);
+                          }}
+                        >
+                          <Field label={t.appointments.doctorName}>
+                            <Input
+                              onChange={(event) => setForm((current) => ({ ...current, doctor: event.target.value }))}
+                              placeholder={t.appointments.doctorPlaceholder}
+                              value={form.doctor}
+                            />
+                          </Field>
+
+                          <Field label={t.appointments.specialty}>
+                            <Input
+                              onChange={(event) => setForm((current) => ({ ...current, specialty: event.target.value }))}
+                              placeholder={t.appointments.specialtyPlaceholder}
+                              value={form.specialty}
+                            />
+                          </Field>
+
+                          <Field label={t.appointments.date}>
+                            <Input
+                              onChange={(event) => {
+                                const nextDate = event.target.value;
+                                setForm((current) => ({ ...current, date: nextDate }));
+                                if (nextDate) {
+                                  setSelectedDate(nextDate);
+                                  setVisibleMonth(monthStart(new Date(`${nextDate}T12:00:00`)));
+                                }
+                              }}
+                              type="date"
+                              value={form.date}
+                            />
+                          </Field>
+
+                          <Field label={timeLabel}>
+                            <Input
+                              onChange={(event) => setForm((current) => ({ ...current, time: event.target.value }))}
+                              type="time"
+                              value={form.time}
+                            />
+                          </Field>
+
+                          <Field label={t.appointments.location}>
+                            <Input
+                              onChange={(event) => setForm((current) => ({ ...current, location: event.target.value }))}
+                              placeholder={t.appointments.locationPlaceholder}
+                              value={form.location}
+                            />
+                          </Field>
+
+                          <div className="flex flex-wrap items-end gap-3 md:col-span-2">
+                            <Button icon="event_available" type="submit">
+                              {t.appointments.saveAppointment}
+                            </Button>
+                            <Button onClick={() => setIsComposerOpen(false)} type="button" variant="ghost">
+                              {cancelLabel}
+                            </Button>
+                          </div>
+                        </form>
+                      ) : selectedAppointments.length > 0 ? null : (
+                        <p className="mt-4 text-body text-text-muted">{t.appointments.selectDatePrompt}</p>
+                      )}
                     </div>
-
-                    {isComposerOpen ? (
-                      <form
-                        className="mt-5 grid gap-4 md:grid-cols-2"
-                        onSubmit={(event) => {
-                          event.preventDefault();
-                          if (!form.doctor || !form.specialty || !form.date || !form.time || !form.location) {
-                            return;
-                          }
-
-                          addAppointment(form);
-                          setSelectedDate(form.date);
-                          setVisibleMonth(monthStart(new Date(`${form.date}T12:00:00`)));
-                          setForm({
-                            doctor: "",
-                            specialty: "",
-                            date: form.date,
-                            time: "",
-                            location: ""
-                          });
-                          setIsComposerOpen(false);
-                        }}
-                      >
-                        <Field label={t.appointments.doctorName}>
-                          <Input
-                            onChange={(event) => setForm((current) => ({ ...current, doctor: event.target.value }))}
-                            placeholder={t.appointments.doctorPlaceholder}
-                            value={form.doctor}
-                          />
-                        </Field>
-
-                        <Field label={t.appointments.specialty}>
-                          <Input
-                            onChange={(event) => setForm((current) => ({ ...current, specialty: event.target.value }))}
-                            placeholder={t.appointments.specialtyPlaceholder}
-                            value={form.specialty}
-                          />
-                        </Field>
-
-                        <Field label={t.appointments.date}>
-                          <Input
-                            onChange={(event) => {
-                              const nextDate = event.target.value;
-                              setForm((current) => ({ ...current, date: nextDate }));
-                              if (nextDate) {
-                                setSelectedDate(nextDate);
-                                setVisibleMonth(monthStart(new Date(`${nextDate}T12:00:00`)));
-                              }
-                            }}
-                            type="date"
-                            value={form.date}
-                          />
-                        </Field>
-
-                        <Field label={timeLabel}>
-                          <Input
-                            onChange={(event) => setForm((current) => ({ ...current, time: event.target.value }))}
-                            type="time"
-                            value={form.time}
-                          />
-                        </Field>
-
-                        <Field label={t.appointments.location}>
-                          <Input
-                            onChange={(event) => setForm((current) => ({ ...current, location: event.target.value }))}
-                            placeholder={t.appointments.locationPlaceholder}
-                            value={form.location}
-                          />
-                        </Field>
-
-                        <div className="flex flex-wrap items-end gap-3 md:col-span-2">
-                          <Button icon="event_available" type="submit">
-                            {t.appointments.saveAppointment}
-                          </Button>
-                          <Button onClick={() => setIsComposerOpen(false)} type="button" variant="ghost">
-                            {cancelLabel}
-                          </Button>
-                        </div>
-                      </form>
-                    ) : selectedAppointments.length > 0 ? null : (
-                      <p className="mt-4 text-body text-text-muted">{t.appointments.selectDatePrompt}</p>
-                    )}
-                  </div>
+                  ) : null}
                 </div>
               </Card>
             </div>

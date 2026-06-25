@@ -53,10 +53,10 @@ export default function OnboardingPage() {
       router.replace("/login");
       return;
     }
-    if (state.onboarding.completed) {
+    if (currentUser?.role !== "Primary Caregiver" || state.onboarding.completed) {
       router.replace("/dashboard");
     }
-  }, [hydrated, isAuthenticated, router, state.onboarding.completed]);
+  }, [hydrated, isAuthenticated, router, state.onboarding.completed, currentUser]);
 
   const steps = useMemo(
     () => [

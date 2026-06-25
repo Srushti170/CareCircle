@@ -11,10 +11,13 @@ import type { CareRole } from "@/lib/app-state";
 
 const inviteRoles: Exclude<CareRole, "Primary Caregiver">[] = ["Family Member", "Patient"];
 
+import { Icon } from "@/components/icon";
+import Link from "next/link";
+
 export default function InvitePage() {
   const { locale } = useLanguage();
   const copy = getAuthCopy(locale);
-  const { state, inviteMember } = useCare();
+  const { state, inviteMember, currentUser } = useCare();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -27,6 +30,27 @@ export default function InvitePage() {
     () => [...state.invites].sort((a, b) => (a.sentAt < b.sentAt ? 1 : -1)),
     [state.invites]
   );
+
+  if (currentUser?.role !== "Primary Caregiver") {
+    return (
+      <AppShell>
+        <Card className="mx-auto max-w-lg mt-12 p-8 text-center">
+          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-danger-bg text-danger mb-4">
+            <Icon className="text-[2.5rem]" name="lock" />
+          </div>
+          <h2 className="text-h2 font-semibold text-primary">Access Denied</h2>
+          <p className="mt-3 text-body text-text-muted">
+            Only the Primary Caregiver is authorized to invite new family members to this Care Circle.
+          </p>
+          <div className="mt-6 flex justify-center">
+            <Link href="/dashboard">
+              <Button icon="arrow_back">Return to Dashboard</Button>
+            </Link>
+          </div>
+        </Card>
+      </AppShell>
+    );
+  }
 
   return (
     <AppShell>

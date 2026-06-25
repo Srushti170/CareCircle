@@ -12,7 +12,7 @@ import type { TaskTag } from "@/lib/app-state";
 
 export default function TasksPage() {
   const { t } = useLanguage();
-  const { state, addTask, toggleTask } = useCare();
+  const { state, addTask, toggleTask, currentUser } = useCare();
   const [tab, setTab] = useState<"todo" | "done">("todo");
   const [form, setForm] = useState({
     title: "",
@@ -31,46 +31,58 @@ export default function TasksPage() {
 
   return (
     <AppShell>
-      <PageHeader action={<Button icon="add" onClick={() => setTab("todo")}>{t.tasks.newTask}</Button>} subtitle={t.tasks.subtitle} title={t.tasks.title} />
-
-      <Card className="mb-8 p-6">
-        <h2 className="text-h2 font-semibold text-primary">{t.tasks.createTask}</h2>
-        <form
-          className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-5"
-          onSubmit={(event) => {
-            event.preventDefault();
-            if (!form.title || !form.assignee || !form.due) {
-              return;
-            }
-            addTask(form);
-            setForm({ title: "", assignee: "", due: "", tag: "Routine" });
-          }}
-        >
-          <Field label={t.tasks.task}>
-            <Input onChange={(event) => setForm((current) => ({ ...current, title: event.target.value }))} placeholder={t.tasks.taskPlaceholder} value={form.title} />
-          </Field>
-          <Field label={t.tasks.assignedTo}>
-            <Input onChange={(event) => setForm((current) => ({ ...current, assignee: event.target.value }))} placeholder={t.tasks.assigneePlaceholder} value={form.assignee} />
-          </Field>
-          <Field label={t.tasks.due}>
-            <Input onChange={(event) => setForm((current) => ({ ...current, due: event.target.value }))} placeholder="Tomorrow or 6:30 PM" value={form.due} />
-          </Field>
-          <Field label={t.tasks.tag}>
-            <Select onChange={(event) => setForm((current) => ({ ...current, tag: event.target.value as TaskTag }))} value={form.tag}>
-              {(["Important", "Routine", "Follow-up", "Daily"] as TaskTag[]).map((tag) => (
-                <option key={tag} value={tag}>
-                  {tagLabels[tag]}
-                </option>
-              ))}
-            </Select>
-          </Field>
-          <div className="flex items-end">
-            <Button className="w-full" icon="add" type="submit">
-              {t.tasks.saveTask}
+      <PageHeader
+        action={
+          currentUser?.role !== "Patient" ? (
+            <Button icon="add" onClick={() => setTab("todo")}>
+              {t.tasks.newTask}
             </Button>
-          </div>
-        </form>
-      </Card>
+          ) : null
+        }
+        subtitle={t.tasks.subtitle}
+        title={t.tasks.title}
+      />
+
+      {currentUser?.role !== "Patient" ? (
+        <Card className="mb-8 p-6">
+          <h2 className="text-h2 font-semibold text-primary">{t.tasks.createTask}</h2>
+          <form
+            className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-5"
+            onSubmit={(event) => {
+              event.preventDefault();
+              if (!form.title || !form.assignee || !form.due) {
+                return;
+              }
+              addTask(form);
+              setForm({ title: "", assignee: "", due: "", tag: "Routine" });
+            }}
+          >
+            <Field label={t.tasks.task}>
+              <Input onChange={(event) => setForm((current) => ({ ...current, title: event.target.value }))} placeholder={t.tasks.taskPlaceholder} value={form.title} />
+            </Field>
+            <Field label={t.tasks.assignedTo}>
+              <Input onChange={(event) => setForm((current) => ({ ...current, assignee: event.target.value }))} placeholder={t.tasks.assigneePlaceholder} value={form.assignee} />
+            </Field>
+            <Field label={t.tasks.due}>
+              <Input onChange={(event) => setForm((current) => ({ ...current, due: event.target.value }))} placeholder="Tomorrow or 6:30 PM" value={form.due} />
+            </Field>
+            <Field label={t.tasks.tag}>
+              <Select onChange={(event) => setForm((current) => ({ ...current, tag: event.target.value as TaskTag }))} value={form.tag}>
+                {(["Important", "Routine", "Follow-up", "Daily"] as TaskTag[]).map((tag) => (
+                  <option key={tag} value={tag}>
+                    {tagLabels[tag]}
+                  </option>
+                ))}
+              </Select>
+            </Field>
+            <div className="flex items-end">
+              <Button className="w-full" icon="add" type="submit">
+                {t.tasks.saveTask}
+              </Button>
+            </div>
+          </form>
+        </Card>
+      ) : null}
 
       <div className="mb-6 inline-flex rounded-full bg-[#efe5db] p-1">
         <button className={`rounded-full px-6 py-3 text-base font-semibold ${tab === "todo" ? "bg-white text-primary" : "text-text-muted"}`} onClick={() => setTab("todo")} type="button">{t.tasks.todo}</button>

@@ -1,400 +1,68 @@
 {
+  "appointments": [],
   "auth": {
-    "currentUserId": "user-92je16h",
+    "currentUserId": "user-e4ch3ci",
     "users": [
       {
-        "id": "user-92je16h",
-        "name": "Srushti",
+        "id": "user-e4ch3ci",
+        "name": "Rahul",
+        "email": "rahul@gmail.com",
+        "password": "123456",
+        "role": "Family Member",
+        "circleId": "circle-cb83ear"
+      },
+      {
+        "id": "user-bptavko",
+        "name": "Srushti Maurya",
         "email": "srushti@gmail.com",
         "password": "123456",
         "role": "Primary Caregiver",
-        "circleId": "circle-gj29q19"
+        "circleId": "circle-cb83ear"
       }
     ]
   },
   "careCircle": {
-    "id": "circle-gj29q19",
-    "name": "Maurya Family",
-    "inviteCode": "KAZ6EL",
-    "createdBy": "user-92je16h"
+    "id": "circle-cb83ear",
+    "name": "Maurya ",
+    "inviteCode": "L6IFGE",
+    "createdBy": "user-bptavko"
   },
-  "invites": [
-    {
-      "id": "invite-n4pet3h",
-      "code": "P39LSU",
-      "circleId": "circle-gj29q19",
-      "name": "Rahul",
-      "email": "rahul@gmail.com",
-      "role": "Family Member",
-      "status": "pending",
-      "sentAt": "2026-06-16T18:17:37.937Z"
-    }
-  ],
-  "onboarding": {
-    "completed": true,
-    "step": "done"
-  },
-  "patient": {
-    "name": "keshkali",
-    "fullName": "Keshkali Maurya",
-    "age": "65",
-    "relation": "GrandMother",
-    "careNeeds": "",
-    "mood": "Unwell",
-    "sleepHours": 7.5,
-    "bloodPressure": "122/80",
-    "sugarLevel": 114,
-    "painLevel": 5,
-    "lastMedication": "8:00 AM"
-  },
-  "medications": [
-    {
-      "id": "med-8lqaqqv",
-      "name": "crocin",
-      "dose": "2",
-      "time": "9.00",
-      "period": "Morning",
-      "status": "Pending",
-      "note": "Added just now",
-      "icon": "pill"
-    },
-    {
-      "id": "med-1",
-      "name": "Metformin",
-      "dose": "500mg • After Food",
-      "time": "8:00 AM",
-      "period": "Morning",
-      "status": "Taken",
-      "note": "Logged by Priya at 8:15 AM",
-      "icon": "pill"
-    },
-    {
-      "id": "med-2",
-      "name": "Vitamin D3",
-      "dose": "1000 IU • Daily",
-      "time": "9:00 AM",
-      "period": "Morning",
-      "status": "Pending",
-      "note": "Mark as taken",
-      "icon": "medication"
-    },
-    {
-      "id": "med-3",
-      "name": "Iron Supplement",
-      "dose": "200mg • With lunch",
-      "time": "1:30 PM",
-      "period": "Afternoon",
-      "status": "Missed",
-      "note": "Skip or take now",
-      "icon": "vaccines"
-    },
-    {
-      "id": "med-4",
-      "name": "Eye Drops",
-      "dose": "Both Eyes",
-      "time": "6:00 PM",
-      "period": "Evening",
-      "status": "Upcoming",
-      "icon": "water_drop"
-    },
-    {
-      "id": "med-5",
-      "name": "Atorvastatin",
-      "dose": "10mg",
-      "time": "10:00 PM",
-      "period": "Night",
-      "status": "Upcoming",
-      "icon": "dark_mode"
-    }
-  ],
-  "tasks": [
-    {
-      "id": "task-1",
-      "title": "Buy groceries for Dad",
-      "assignee": "Ravi",
-      "due": "Tomorrow",
-      "tag": "Important",
-      "completed": true
-    },
-    {
-      "id": "task-2",
-      "title": "Refill blood pressure meds",
-      "assignee": "Anjali",
-      "due": "Friday",
-      "tag": "Routine",
-      "completed": true
-    },
-    {
-      "id": "task-3",
-      "title": "Call lab for test report",
-      "assignee": "Sonia",
-      "due": "Today",
-      "tag": "Follow-up",
-      "completed": true
-    },
-    {
-      "id": "task-4",
-      "title": "Evening walk with Dad",
-      "assignee": "Neel",
-      "due": "6:30 PM",
-      "tag": "Daily",
-      "completed": true
-    }
-  ],
-  "appointments": [
-    {
-      "id": "appt-k8ehu0v",
-      "doctor": "Dr.Rachna",
-      "specialty": "Eye Specialist",
-      "date": "2026-06-20",
-      "time": "10:00",
-      "location": "Rajdhani",
-      "reminder": true,
-      "notes": ""
-    },
-    {
-      "id": "appt-95y6cp4",
-      "doctor": "Dr. Mehta",
-      "specialty": "Cardiology",
-      "date": "2026-06-25",
-      "time": "09:15",
-      "location": "Mumbai hospital",
-      "reminder": true,
-      "notes": ""
-    },
-    {
-      "id": "appt-1",
-      "doctor": "Dr. Mehta",
-      "specialty": "General Physician",
-      "time": "Nov 15, 2024 • 10:30 AM",
-      "location": "City Care Hospital, Room 402",
-      "reminder": true,
-      "notes": ""
-    },
-    {
-      "id": "appt-2",
-      "doctor": "Dr. Sarah Thompson",
-      "specialty": "Ophthalmologist",
-      "time": "Nov 22, 2024 • 02:15 PM",
-      "location": "Vision Center, Wing B",
-      "reminder": false,
-      "notes": ""
-    }
-  ],
-  "feed": [
-    {
-      "id": "feed-axkhtnx",
-      "user": "R",
-      "title": "Buy groceries for Dad पूर्ण झाले",
-      "time": "आज • 4:14 PM",
-      "tone": "bg-[#d7ecd7]",
-      "icon": "check_circle",
-      "badge": "DONE",
-      "reactions": 0,
-      "kind": "task"
-    },
-    {
-      "id": "feed-a78yej7",
-      "user": "N",
-      "title": "Evening walk with Dad पूर्ण झाले",
-      "time": "आज • 4:14 PM",
-      "tone": "bg-[#d7ecd7]",
-      "icon": "check_circle",
-      "badge": "DONE",
-      "reactions": 0,
-      "kind": "task"
-    },
-    {
-      "id": "feed-j9704up",
-      "user": "A",
-      "title": "Scheduled Dr.Rachna visit",
-      "time": "Today • 1:08 AM",
-      "tone": "bg-[#cae5f6]",
-      "icon": "event",
-      "badge": "UPDATE",
-      "reactions": 0,
-      "kind": "appointment"
-    },
-    {
-      "id": "feed-1a2j5ev",
-      "user": "S",
-      "title": "Call lab for test report marked done",
-      "time": "Today • 3:13 PM",
-      "tone": "bg-[#d7ecd7]",
-      "icon": "check_circle",
-      "badge": "DONE",
-      "reactions": 0,
-      "kind": "task"
-    },
-    {
-      "id": "feed-b6wk7gy",
-      "user": "A",
-      "title": "Scheduled Dr. Mehta visit",
-      "time": "Today • 3:10 PM",
-      "tone": "bg-[#cae5f6]",
-      "icon": "event",
-      "badge": "UPDATE",
-      "reactions": 0,
-      "kind": "appointment"
-    },
-    {
-      "id": "feed-dsiiwjo",
-      "user": "R",
-      "title": "Buy groceries for Dad फिर से बाकी कामों में डाला गया",
-      "time": "आज • 2:41 PM",
-      "tone": "bg-[#ece5db]",
-      "icon": "check_circle",
-      "badge": "UPDATE",
-      "reactions": 0,
-      "kind": "task"
-    },
-    {
-      "id": "feed-37lzwit",
-      "user": "R",
-      "title": "Buy groceries for Dad पूरा किया गया",
-      "time": "आज • 2:41 PM",
-      "tone": "bg-[#d7ecd7]",
-      "icon": "check_circle",
-      "badge": "DONE",
-      "reactions": 0,
-      "kind": "task"
-    },
-    {
-      "id": "feed-80aooou",
-      "user": "A",
-      "title": "Refill blood pressure meds marked done",
-      "time": "Today • 11:38 AM",
-      "tone": "bg-[#d7ecd7]",
-      "icon": "check_circle",
-      "badge": "DONE",
-      "reactions": 0,
-      "kind": "task"
-    },
-    {
-      "id": "feed-zxok8mq",
-      "user": "A",
-      "title": "Added crocin to morning medicines",
-      "time": "Today • 12:52 AM",
-      "tone": "bg-[#d8ecd9]",
-      "icon": "medical_services",
-      "badge": "UPDATE",
-      "reactions": 0,
-      "kind": "medication"
-    },
-    {
-      "id": "feed-pige7pt",
-      "user": "P",
-      "title": "Health check-in saved with mood \"Unwell\"",
-      "time": "Today • 12:00 AM",
-      "tone": "bg-[#cae5f6]",
-      "icon": "monitor_heart",
-      "badge": "GOOD DAY",
-      "reactions": 0,
-      "kind": "health"
-    },
-    {
-      "id": "feed-yl08nm2",
-      "user": "P",
-      "title": "Health check-in saved with mood \"Unwell\"",
-      "time": "Today • 12:00 AM",
-      "tone": "bg-[#cae5f6]",
-      "icon": "monitor_heart",
-      "badge": "GOOD DAY",
-      "reactions": 0,
-      "kind": "health"
-    },
-    {
-      "id": "feed-vfm502v",
-      "user": "A",
-      "title": "had meds",
-      "time": "Today • 11:59 PM",
-      "tone": "bg-[#ece5db]",
-      "icon": "groups",
-      "badge": "UPDATE",
-      "reactions": 0,
-      "kind": "family"
-    },
-    {
-      "id": "feed-1",
-      "user": "S",
-      "title": "Sister updated health log",
-      "time": "10 mins ago",
-      "tone": "bg-[#cae5f6]",
-      "icon": "monitor_heart",
-      "badge": "UPDATE",
-      "reactions": 0,
-      "kind": "health"
-    },
-    {
-      "id": "feed-2",
-      "user": "M",
-      "title": "Mom had lunch",
-      "time": "2 hours ago",
-      "tone": "bg-[#ece5db]",
-      "icon": "restaurant",
-      "badge": "UPDATE",
-      "reactions": 0,
-      "kind": "family"
-    },
-    {
-      "id": "feed-3",
-      "user": "R",
-      "title": "Rahul marked evening medicine as taken",
-      "time": "Today • 10:00 AM",
-      "tone": "bg-[#d7ecd7]",
-      "icon": "medical_services",
-      "badge": "DONE",
-      "reactions": 2,
-      "kind": "medication"
-    }
-  ],
-  "healthLogs": [
-    {
-      "id": "log-dty5053",
-      "date": "2026-06-16",
-      "mood": "Unwell",
-      "painLevel": 5,
-      "sleepHours": 7.5,
-      "bloodPressure": "122/80",
-      "sugarLevel": 114,
-      "notes": ""
-    },
-    {
-      "id": "log-sx82idc",
-      "date": "2026-06-16",
-      "mood": "Unwell",
-      "painLevel": 5,
-      "sleepHours": 7.5,
-      "bloodPressure": "122/80",
-      "sugarLevel": 114,
-      "notes": ""
-    },
-    {
-      "id": "log-1",
-      "date": "2026-06-16",
-      "mood": "Happy",
-      "painLevel": 5,
-      "sleepHours": 7,
-      "bloodPressure": "122/80",
-      "sugarLevel": 114,
-      "notes": "Comfortable morning and good appetite."
-    }
-  ],
   "documents": [],
   "familyMembers": [
     {
-      "id": "fm-xbij39a",
+      "id": "fm-0l2bjx6",
       "name": "Rahul",
       "email": "rahul@gmail.com",
       "role": "Family Member"
     },
     {
-      "id": "fm-5pmzxid",
-      "name": "Srushti",
+      "id": "fm-36hgsg0",
+      "name": "Srushti Maurya",
       "email": "srushti@gmail.com",
       "role": "Primary Caregiver"
     }
   ],
+  "feed": [],
+  "healthLogs": [],
+  "invites": [],
+  "medications": [],
+  "onboarding": {
+    "completed": true,
+    "step": "done"
+  },
+  "patient": {
+    "name": "Dadi",
+    "fullName": "KeshKali",
+    "age": "89",
+    "relation": "grandma",
+    "careNeeds": "",
+    "mood": "Neutral",
+    "sleepHours": 0,
+    "bloodPressure": "",
+    "sugarLevel": 0,
+    "painLevel": 0,
+    "lastMedication": ""
+  },
   "settings": {
     "textSize": "Large",
     "contrast": "High",
@@ -405,5 +73,6 @@
       "dailyHealthSummary": false,
       "quietHours": true
     }
-  }
+  },
+  "tasks": []
 }

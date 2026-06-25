@@ -12,11 +12,22 @@ import type { Locale } from "@/lib/i18n";
 export default function SettingsPage() {
   const { t, locale, setLocale } = useLanguage();
   const copy = getAuthCopy(locale);
-  const { state, updateCarePreference, updateSetting, syncLocale } = useCare();
+  const { state, updateCarePreference, updateSetting, syncLocale, currentUser } = useCare();
+  const isPrimary = currentUser?.role === "Primary Caregiver";
 
   return (
     <AppShell>
-      <PageHeader action={<Button icon="save">{t.common.savedAutomatically}</Button>} subtitle={t.settings.subtitle} title={t.settings.title} />
+      <PageHeader
+        action={
+          isPrimary ? (
+            <Button icon="save">{t.common.savedAutomatically}</Button>
+          ) : (
+            <StatusPill tone="warning">Read-Only Mode</StatusPill>
+          )
+        }
+        subtitle={isPrimary ? t.settings.subtitle : "View care preferences and family access."}
+        title={t.settings.title}
+      />
 
       <div className="grid gap-6 xl:grid-cols-[1fr_1fr_0.8fr]">
         <Card className="p-6">
@@ -25,6 +36,7 @@ export default function SettingsPage() {
             <div className="rounded-[22px] bg-surface-muted p-5">
               <Field label={t.settings.textSize}>
                 <Select
+                  disabled={!isPrimary}
                   onChange={(event) => updateSetting("textSize", event.target.value as "Standard" | "Large")}
                   value={state.settings.textSize}
                 >
@@ -36,6 +48,7 @@ export default function SettingsPage() {
             <div className="rounded-[22px] bg-surface-muted p-5">
               <Field label={t.settings.language}>
                 <Select
+                  disabled={!isPrimary}
                   onChange={(event) => {
                     const next = event.target.value as Locale;
                     setLocale(next);
@@ -52,6 +65,7 @@ export default function SettingsPage() {
             <div className="rounded-[22px] bg-surface-muted p-5">
               <Field label={t.settings.contrast}>
                 <Select
+                  disabled={!isPrimary}
                   onChange={(event) => updateSetting("contrast", event.target.value as "Standard" | "High")}
                   value={state.settings.contrast}
                 >
@@ -79,7 +93,10 @@ export default function SettingsPage() {
                   <div className="text-label font-semibold">{label}</div>
                   <button
                     aria-pressed={enabled}
-                    className={`flex h-10 w-20 items-center rounded-full p-1 ${enabled ? "justify-end bg-primary" : "justify-start bg-[#dfd6cc]"}`}
+                    className={`flex h-10 w-20 items-center rounded-full p-1 ${
+                      enabled ? "justify-end bg-primary" : "justify-start bg-[#dfd6cc]"
+                    } ${!isPrimary ? "opacity-60 cursor-not-allowed" : ""}`}
+                    disabled={!isPrimary}
                     onClick={() => updateCarePreference(settingKey)}
                     type="button"
                   >
@@ -104,14 +121,18 @@ export default function SettingsPage() {
               </div>
             ))}
           </div>
-          <div className="mt-6 rounded-[22px] bg-white p-4 text-body text-text-muted shadow-card">
-            {copy.helperInviteCode}
-          </div>
-          <Link className="mt-5 block" href="/invite">
-            <Button className="w-full" icon="person_add">
-              {copy.inviteTitle}
-            </Button>
-          </Link>
+          {isPrimary ? (
+            <>
+              <div className="mt-6 rounded-[22px] bg-white p-4 text-body text-text-muted shadow-card">
+                {copy.helperInviteCode}
+              </div>
+              <Link className="mt-5 block" href="/invite">
+                <Button className="w-full" icon="person_add">
+                  {copy.inviteTitle}
+                </Button>
+              </Link>
+            </>
+          ) : null}
         </Card>
       </div>
     </AppShell>

@@ -188,74 +188,76 @@ export default function DocumentsPage() {
         type="file"
       />
 
-      <Card
-        className={`overflow-hidden border-dashed transition ${
-          isDragActive ? "border-primary bg-[#f9f6f0] shadow-soft" : "bg-white"
-        }`}
-      >
-        <button
-          className="flex w-full flex-col items-center justify-center gap-3 px-6 py-10 text-center md:py-12"
-          onClick={() => {
-            setUploadNotice(null);
-            uploadInputRef.current?.click();
-          }}
-          onDragEnter={(event) => {
-            event.preventDefault();
-            setIsDragActive(true);
-          }}
-          onDragLeave={(event) => {
-            event.preventDefault();
-            setIsDragActive(false);
-          }}
-          onDragOver={(event) => {
-            event.preventDefault();
-            setIsDragActive(true);
-          }}
-          onDrop={(event) => {
-            event.preventDefault();
-            setIsDragActive(false);
-            handleUploadSelection(event.dataTransfer.files?.[0] ?? null);
-          }}
-          type="button"
+      {currentUser?.role !== "Patient" ? (
+        <Card
+          className={`overflow-hidden border-dashed transition ${
+            isDragActive ? "border-primary bg-[#f9f6f0] shadow-soft" : "bg-white"
+          }`}
         >
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-accent text-primary shadow-card">
-            <Icon className="text-[28px]" name="upload_file" />
-          </div>
-          <div className="text-h3 font-semibold text-primary">{t.documents.uploadDocument}</div>
-          <p className="max-w-xl text-sm text-text-muted">{t.documents.uploadHelp}</p>
-          <p className="text-sm text-text-muted">{t.documents.uploadFormats}</p>
-        </button>
+          <button
+            className="flex w-full flex-col items-center justify-center gap-3 px-6 py-10 text-center md:py-12"
+            onClick={() => {
+              setUploadNotice(null);
+              uploadInputRef.current?.click();
+            }}
+            onDragEnter={(event) => {
+              event.preventDefault();
+              setIsDragActive(true);
+            }}
+            onDragLeave={(event) => {
+              event.preventDefault();
+              setIsDragActive(false);
+            }}
+            onDragOver={(event) => {
+              event.preventDefault();
+              setIsDragActive(true);
+            }}
+            onDrop={(event) => {
+              event.preventDefault();
+              setIsDragActive(false);
+              handleUploadSelection(event.dataTransfer.files?.[0] ?? null);
+            }}
+            type="button"
+          >
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-accent text-primary shadow-card">
+              <Icon className="text-[28px]" name="upload_file" />
+            </div>
+            <div className="text-h3 font-semibold text-primary">{t.documents.uploadDocument}</div>
+            <p className="max-w-xl text-sm text-text-muted">{t.documents.uploadHelp}</p>
+            <p className="text-sm text-text-muted">{t.documents.uploadFormats}</p>
+          </button>
 
-        <div className="border-t border-line bg-[#fcfaf6] px-5 py-4">
-          <div className="grid gap-3 md:grid-cols-[220px_minmax(0,1fr)_auto]">
-            <Select
-              onChange={(event) => setUploadCategory(event.target.value as DocumentCategory)}
-              value={uploadCategory}
-            >
-              {(["Prescriptions", "Lab Reports", "Discharge Papers", "Identity Docs", "Other"] as DocumentCategory[]).map((category) => (
-                <option key={category} value={category}>
-                  {categoryLabels[category]}
-                </option>
-              ))}
-            </Select>
-            <Input
-              onChange={(event) => setSummaryDraft(event.target.value)}
-              placeholder={t.documents.summaryPlaceholder}
-              value={summaryDraft}
-            />
-            <Button
-              className="md:min-w-[180px]"
-              icon="upload_file"
-              onClick={() => {
-                setUploadNotice(null);
-                uploadInputRef.current?.click();
-              }}
-            >
-              {t.documents.uploadDocument}
-            </Button>
+          <div className="border-t border-line bg-[#fcfaf6] px-5 py-4">
+            <div className="grid gap-3 md:grid-cols-[220px_minmax(0,1fr)_auto]">
+              <Select
+                onChange={(event) => setUploadCategory(event.target.value as DocumentCategory)}
+                value={uploadCategory}
+              >
+                {(["Prescriptions", "Lab Reports", "Discharge Papers", "Identity Docs", "Other"] as DocumentCategory[]).map((category) => (
+                  <option key={category} value={category}>
+                    {categoryLabels[category]}
+                  </option>
+                ))}
+              </Select>
+              <Input
+                onChange={(event) => setSummaryDraft(event.target.value)}
+                placeholder={t.documents.summaryPlaceholder}
+                value={summaryDraft}
+              />
+              <Button
+                className="md:min-w-[180px]"
+                icon="upload_file"
+                onClick={() => {
+                  setUploadNotice(null);
+                  uploadInputRef.current?.click();
+                }}
+              >
+                {t.documents.uploadDocument}
+              </Button>
+            </div>
           </div>
-        </div>
-      </Card>
+        </Card>
+      ) : null}
 
       {uploadNotice ? (
         <Card className="mt-4 border-[#d9d1c8] bg-[#fffaf4] p-4 text-sm text-text-muted">{uploadNotice}</Card>
