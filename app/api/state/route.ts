@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getMongoClientPromise } from "@/lib/mongodb";
+import { stateEmitter } from "@/lib/state-emitter";
 
 export async function GET() {
   if (!process.env.MONGODB_URI) {
@@ -225,6 +226,13 @@ export async function POST(request: Request) {
     }
 
     await Promise.all(operations);
+
+    // Broadcast state update to all active SSE clients
+    try {
+      stateEmitter.emit("update", body);
+    } catch (emitterErr) {
+      console.warn("Failed to broadcast state update:", emitterErr);
+    }
 
     return NextResponse.json({ ok: true });
   } catch (error) {

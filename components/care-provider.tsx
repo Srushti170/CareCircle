@@ -5,6 +5,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState
 } from "react";
 
@@ -114,6 +115,7 @@ export function CareProvider({ children }: { children: React.ReactNode }) {
   const { locale, t } = useLanguage();
   const [state, setState] = useState<CareCircleState>(initialState);
   const [hydrated, setHydrated] = useState(false);
+  const isIncomingSyncRef = useRef(false);
 
   useEffect(() => {
     async function loadState() {
@@ -143,6 +145,31 @@ export function CareProvider({ children }: { children: React.ReactNode }) {
     loadState();
   }, []);
 
+  // Subscribe to real-time updates via Server-Sent Events (SSE)
+  useEffect(() => {
+    if (!hydrated) {
+      return;
+    }
+
+    const eventSource = new EventSource("/api/state/sync");
+
+    eventSource.addEventListener("update", (event) => {
+      try {
+        const updatedState = JSON.parse(event.data);
+        if (updatedState && updatedState.auth) {
+          isIncomingSyncRef.current = true;
+          setState(sanitizePersistedState(updatedState as CareCircleState));
+        }
+      } catch (err) {
+        console.error("Failed to parse real-time update:", err);
+      }
+    });
+
+    return () => {
+      eventSource.close();
+    };
+  }, [hydrated]);
+
   useEffect(() => {
     if (!hydrated) {
       return;
@@ -150,6 +177,11 @@ export function CareProvider({ children }: { children: React.ReactNode }) {
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     } catch {}
+
+    if (isIncomingSyncRef.current) {
+      isIncomingSyncRef.current = false;
+      return;
+    }
 
     fetch("/api/state", {
       method: "POST",
