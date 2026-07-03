@@ -24,14 +24,21 @@ export function getMongoClientPromise(): Promise<MongoClient> {
 
     if (!globalWithMongo._mongoClientPromise) {
       client = new MongoClient(uri, options);
-      globalWithMongo._mongoClientPromise = client.connect();
+      globalWithMongo._mongoClientPromise = client.connect().then((c) => {
+        console.log("mongo connected");
+        return c;
+      });
     }
     clientPromise = globalWithMongo._mongoClientPromise;
   } else {
     // In production mode, it's best to not use a global variable.
     client = new MongoClient(uri, options);
-    clientPromise = client.connect();
+    clientPromise = client.connect().then((c) => {
+      console.log("mongo connected");
+      return c;
+    });
   }
 
   return clientPromise;
 }
+
