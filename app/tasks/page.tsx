@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { AppShell } from "@/components/app-shell";
 import { useCare } from "@/components/care-provider";
@@ -11,7 +11,7 @@ import { Button, Card, Field, Input, PageHeader, Select, StatusPill } from "@/co
 import type { TaskTag } from "@/lib/app-state";
 
 export default function TasksPage() {
-  const { t } = useLanguage();
+  const { locale, t } = useLanguage();
   const { state, addTask, toggleTask, currentUser } = useCare();
   const [tab, setTab] = useState<"todo" | "done">("todo");
   const [form, setForm] = useState({
@@ -20,6 +20,33 @@ export default function TasksPage() {
     due: "",
     tag: "Routine" as TaskTag
   });
+  const assigneeOptions = useMemo(() => {
+    const familyMembers = state.familyMembers.length > 0
+      ? state.familyMembers
+      : currentUser
+        ? [{ id: currentUser.id, name: currentUser.name, role: currentUser.role, email: currentUser.email }]
+        : [];
+
+    return familyMembers
+      .filter((member) => member.name.trim().length > 0)
+      .filter(
+        (member, index, members) =>
+          members.findIndex((item) => item.name.trim().toLowerCase() === member.name.trim().toLowerCase()) === index
+      )
+      .map((member) => ({
+        ...member,
+        name: member.name.trim()
+      }));
+  }, [currentUser, state.familyMembers]);
+
+  useEffect(() => {
+    if (!form.assignee && assigneeOptions.length > 0) {
+      setForm((current) => ({
+        ...current,
+        assignee: assigneeOptions[0].name
+      }));
+    }
+  }, [assigneeOptions, form.assignee]);
 
   const filtered = state.tasks.filter((task) => (tab === "todo" ? !task.completed : task.completed));
   const tagLabels: Record<TaskTag, string> = {
@@ -28,6 +55,24 @@ export default function TasksPage() {
     "Follow-up": t.values.taskTags["Follow-up"],
     Daily: t.values.taskTags.Daily
   };
+
+  function formatDueValue(value: string) {
+    if (!value) {
+      return "";
+    }
+
+    const parsed = new Date(value);
+    if (Number.isNaN(parsed.getTime())) {
+      return value;
+    }
+
+    return parsed.toLocaleString(locale === "en" ? "en-US" : locale === "hi" ? "hi-IN" : "mr-IN", {
+      day: "numeric",
+      month: "short",
+      hour: "numeric",
+      minute: "2-digit"
+    });
+  }
 
   return (
     <AppShell>
@@ -61,10 +106,16 @@ export default function TasksPage() {
               <Input onChange={(event) => setForm((current) => ({ ...current, title: event.target.value }))} placeholder={t.tasks.taskPlaceholder} value={form.title} />
             </Field>
             <Field label={t.tasks.assignedTo}>
-              <Input onChange={(event) => setForm((current) => ({ ...current, assignee: event.target.value }))} placeholder={t.tasks.assigneePlaceholder} value={form.assignee} />
+              <Select onChange={(event) => setForm((current) => ({ ...current, assignee: event.target.value }))} value={form.assignee}>
+                {assigneeOptions.map((member) => (
+                  <option key={member.id} value={member.name}>
+                    {member.name}
+                  </option>
+                ))}
+              </Select>
             </Field>
             <Field label={t.tasks.due}>
-              <Input onChange={(event) => setForm((current) => ({ ...current, due: event.target.value }))} placeholder="Tomorrow or 6:30 PM" value={form.due} />
+              <Input onChange={(event) => setForm((current) => ({ ...current, due: event.target.value }))} type="datetime-local" value={form.due} />
             </Field>
             <Field label={t.tasks.tag}>
               <Select onChange={(event) => setForm((current) => ({ ...current, tag: event.target.value as TaskTag }))} value={form.tag}>
@@ -106,7 +157,7 @@ export default function TasksPage() {
               </div>
               <div className="flex items-center gap-3">
                 <Icon className="text-[20px]" name="calendar_today" />
-                <span>{t.tasks.due}: {task.due}</span>
+                <span>{t.tasks.due}: {formatDueValue(task.due)}</span>
               </div>
             </div>
             <Button
